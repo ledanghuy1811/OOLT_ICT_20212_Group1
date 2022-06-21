@@ -1,0 +1,17 @@
+package algorithms;
+
+import java.util.LinkedList;
+
+public class BFS extends Algorithms {
+	private LinkedList<Integer> adj[] = new LinkedList[getNumVertex()];
+	
+	//method
+	public void getAdj() {
+		for()
+	}
+	
+	@Override
+	public void excute() {
+		
+	}
+}

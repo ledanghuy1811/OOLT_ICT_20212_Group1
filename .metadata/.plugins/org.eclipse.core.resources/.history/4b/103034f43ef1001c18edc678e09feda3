@@ -1,0 +1,25 @@
+package graph;
+
+import java.util.*;
+
+public class Graph {
+	public static final int MAX_NUMBERS_EDGE = 1000;
+	
+	// attribute
+	private ArrayList<Vertex> vertex = new ArrayList<Vertex>();
+	private ArrayList<Edge> edge = new ArrayList<Edge>();
+	
+	// method
+	public void addVertex(int vertex) {
+		Vertex temp = new Vertex(vertex);
+		this.vertex.add(temp);
+	}
+	public void addEdge(int source, int target, boolean flag, double weight) {
+		Edge temp;
+		if(flag) 
+			temp = new Edge(source, target, flag, weight);
+		else
+			temp = new Edge(source, target, flag);
+		
+	}
+}
