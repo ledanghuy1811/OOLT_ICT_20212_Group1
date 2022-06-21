@@ -29,7 +29,9 @@ public abstract class Algorithms {
 		return graph;
 	}
 	
-	
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+	}
 	//to override
 	public abstract void excute();
 }
