@@ -1,0 +1,35 @@
+package algorithms;
+
+import graph.*;
+
+public abstract class Algorithms {
+	//attributes
+	private Graph graph = new Graph();
+	private int numVertex;
+	private Vertex source;
+	
+	//constructor
+	public Algorithms() {
+		
+	}
+	public Algorithms(Graph graph, int numVertex, Vertex source) {
+		this.graph = graph;
+		this.numVertex = numVertex;
+		this.source = source;
+	}
+	
+	//getter and setter
+	public int getNumVertex() {
+		return numVertex;
+	}
+	public Graph getGraph() {
+		return graph;
+	}
+	public Vertex getSource() {
+		return source;
+	}
+	
+	
+	//to override
+	public abstract void execute();
+}

@@ -1,0 +1,15 @@
+package algorithms;
+
+public class BellmanFord extends Algorithms {
+	
+	
+	// override
+	@Override
+	public void execute() {
+		
+	}
+	@Override
+	public void play() {
+		
+	}
+}

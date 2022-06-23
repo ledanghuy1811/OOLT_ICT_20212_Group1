@@ -31,14 +31,8 @@ public class Graph {
 	public boolean getIsDirected() {
 		return this.isDirected;
 	}
-	public void setIsDirectred(boolean flag) {
-		this.isDirected = flag;
-	}
 	public boolean getIsWeight() {
 		return isWeight;
-	}
-	public void setIsWeight(boolean isWeight) {
-		this.isWeight = isWeight;
 	}
 	
 	// method

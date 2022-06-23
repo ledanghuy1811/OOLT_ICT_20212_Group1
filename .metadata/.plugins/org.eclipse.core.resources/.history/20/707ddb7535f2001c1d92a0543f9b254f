@@ -1,0 +1,11 @@
+package algorithms;
+
+public class Dijkstra extends Algorithms {
+	
+	
+	//override
+	@Override
+	public void execute() {
+		
+	}
+}

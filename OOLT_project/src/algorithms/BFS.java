@@ -5,38 +5,33 @@ import java.util.LinkedList;
 import graph.*;
 
 public class BFS extends Algorithms {
-	private LinkedList<Vertex> adj[] = new LinkedList[this.getNumVertex()];
-	private Vertex source;
+	private LinkedList<Vertex> adj[];
+	private static int nIndex = 0;
 	
 	//constructor
 	public BFS() {
-		
+		super();
 	}
-	public BFS(Graph graph, int numVertex, int numEdge, Vertex source) {
-		super(graph, numVertex, numEdge);
-		this.source = source;
-	}
-	
-	//setter and getter
-	public void setAdj() {
-		for(int i = 0; i < this.getNumVertex(); i++) {
+	public BFS(Graph graph, int numVertex, Vertex source) {
+		super(graph, numVertex, source);
+		this.adj = new LinkedList[numVertex];
+		for(int i = 0; i < numVertex; i++) {
 			adj[i] = new LinkedList();
-			for(Vertex v : this.getGraph().getAdjacent(i)) {
+			for(Vertex v : graph.getAdjacent(i)) {
 				adj[i].add(v);
 			}
 		}
 	}
+	
+	//setter and getter
 	public LinkedList<Vertex>[] getAdj() {
 		return adj;
-	}
-	public Vertex getSource() {
-		return source;
 	}
 	
 	//override method
 	@Override
-	public void excute() {
-		Vertex s = this.source;
+	public void execute() {
+		Vertex s = this.getSource();
 		// Mark all the vertices as not visited(By default
         // set as false)
 		boolean visited[] = new boolean [this.getNumVertex()];
@@ -45,13 +40,15 @@ public class BFS extends Algorithms {
 		LinkedList<Vertex> queue = new LinkedList<Vertex>();
 		
 		// Mark the current node as visited and enqueue it
-		visited[this.source.getId()] = true;
+		visited[this.getSource().getId()] = true;
 		queue.add(s);
 		
 		while(queue.size() != 0) {
 			// Dequeue a vertex from queue and print it
 			s = queue.poll();
-			System.out.print(s.getId() + " ");
+//			System.out.print(s.getId() + " ");
+			this.setOneDist(nIndex, s.getId());
+			nIndex ++;
 			
 			// Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
@@ -67,5 +64,13 @@ public class BFS extends Algorithms {
                 }
             }
 		}
+	}
+	@Override
+	public void play() {
+		System.out.println("BFS is:");
+		for(int i = 0; i < this.getDist().length; i++) {
+			System.out.print((int)this.getDist()[i] + "\t");
+		}
+		System.out.println();
 	}
 }
