@@ -15,8 +15,9 @@ public class Graph {
 	public Graph() {
 		
 	}
-	public Graph(boolean isDirected) {
+	public Graph(boolean isDirected, boolean isWeighted) {
 		this.isDirected = isDirected;
+		this.isWeight = isWeighted;
 		for(int i = 0; i < MAX_NUMBERS_EDGE; i++)
 			this.edge[i] = new ArrayList<Edge>();
 	}
@@ -55,8 +56,7 @@ public class Graph {
 	public ArrayList<Vertex> getAdjacent(int id) {
 		ArrayList<Vertex> temp = new ArrayList<Vertex>();
 		for(Edge edge: this.getEdge()[id]) {
-			Vertex adjacent = new Vertex(edge.getNodeTarget());
-			temp.add(adjacent);
+			temp.add(edge.getNodeTarget());
 		}
 		return temp;
 	}
@@ -68,7 +68,7 @@ public class Graph {
 	}
 	public Edge getOneEdge(int source, int target) {
 		for(Edge e : this.getEdge()[source])
-			if(target == e.getNodeTarget())
+			if(target == e.getNodeTarget().getId())
 				return e;
 		return null;
 	}

@@ -4,15 +4,15 @@ import java.util.Comparator;
 
 public class Edge implements Comparator<Edge> {
 	//attribute
-	private int nodeSource;
-	private int nodeTarget;
+	private Vertex nodeSource;
+	private Vertex nodeTarget;
 	private double weight;
 	
 	//getter
-	public int getNodeSource() {
+	public Vertex getNodeSource() {
 		return nodeSource;
 	}
-	public int getNodeTarget() {
+	public Vertex getNodeTarget() {
 		return nodeTarget;
 	}
 	public double getWeight() {
@@ -24,13 +24,13 @@ public class Edge implements Comparator<Edge> {
 		
 	}
 	public Edge(int source, int target) {
-		this.nodeSource = source;
-		this.nodeTarget = target;
+		this.nodeSource = new Vertex(source);
+		this.nodeTarget = new Vertex(target);
 		this.weight = 0;
 	}
 	public Edge(int source, int target, double weight) {
-		this.nodeSource = source;
-		this.nodeTarget = target;
+		this.nodeSource = new Vertex(source);
+		this.nodeTarget = new Vertex(target);
 		this.weight = weight;
 	}
 	

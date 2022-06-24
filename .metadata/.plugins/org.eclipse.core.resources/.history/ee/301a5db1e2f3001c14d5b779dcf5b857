@@ -1,0 +1,10 @@
+package context;
+
+import algorithms.Algorithms;
+
+public class SetBFS implements SetAlgorithms {
+	@Override
+	public Algorithms setAlgorithms() {
+		
+	}
+}

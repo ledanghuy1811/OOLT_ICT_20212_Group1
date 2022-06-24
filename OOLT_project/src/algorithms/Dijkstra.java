@@ -30,16 +30,20 @@ public class Dijkstra extends Algorithms {
 			Edge v = adj[u].get(i);
 
 			// If current node hasn't already been processed
-			if (!settled.contains(new Vertex(v.getNodeTarget()))) {
+			if (!settled.contains(v.getNodeTarget())) {
 				edgeDistance = v.getWeight();
 				newDistance = this.getDist()[u] + edgeDistance;
 
 				// If new distance is cheaper in cost
-				if (newDistance < this.getDist()[v.getNodeTarget()])
-					this.setOneDist(v.getNodeTarget(), newDistance);
+				if (newDistance < this.getDist()[v.getNodeTarget().getId()])
+					this.setOneDist(v.getNodeTarget().getId(), newDistance);
 
 				// Add the current node to the queue
-				pq.add(new Edge(v.getNodeTarget(), v.getNodeTarget(), this.getDist()[v.getNodeTarget()]));
+				pq.add(new Edge(
+						v.getNodeTarget().getId(), 
+						v.getNodeTarget().getId(), 
+						this.getDist()[v.getNodeTarget().getId()])
+				);
 			}
 		}
 	}
@@ -68,7 +72,7 @@ public class Dijkstra extends Algorithms {
 
 			// Removing the minimum distance node
 			// from the priority queue
-			int u = pq.remove().getNodeTarget();
+			int u = pq.remove().getNodeTarget().getId();
 
 			// Adding the node whose distance is
 			// finalized

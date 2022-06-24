@@ -1,0 +1,31 @@
+package main;
+
+import algorithms.*;
+import graph.*;
+import java.util.Scanner;
+
+public class Context {
+//	public Algorithms setAlgorithms() {
+//		
+//	}
+	
+	public Graph setGraph() {
+		Scanner keyBoard = new Scanner(System.in);
+		
+		System.out.print("Is graph directed(0-1): ");
+		int choice = keyBoard.nextInt();
+		boolean isDirected;
+		if(choice == 1)
+			isDirected = true;
+		else
+			isDirected = false;
+		System.out.print("Is graph weighted(0-1): ");
+		choice = keyBoard.nextInt();
+		boolean isWeighted;
+		if(choice == 1)
+			isWeighted = true;
+		else
+			isWeighted = false;
+		
+	}
+}

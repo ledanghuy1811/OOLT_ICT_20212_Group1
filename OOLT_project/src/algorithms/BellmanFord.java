@@ -26,8 +26,8 @@ public class BellmanFord extends Algorithms {
         for (int i = 1; i < this.getNumVertex(); ++i) {
             for (int j = 0; j < this.getGraph().getEdge().length; ++j) {
                 for(Edge e : this.getGraph().getEdge()[j]) {
-                	int u = e.getNodeSource();
-                    int v = e.getNodeTarget();
+                	int u = e.getNodeSource().getId();
+                    int v = e.getNodeTarget().getId();
                     double weight = e.getWeight();
                     if (
                     	this.getDist()[u] != Double.MAX_VALUE && 
@@ -43,8 +43,8 @@ public class BellmanFord extends Algorithms {
         // path, then there is a cycle.
         for (int j = 0; j < this.getGraph().getEdge().length; ++j) {
             for(Edge e : this.getGraph().getEdge()[j]) {
-            	int u = e.getNodeSource();
-                int v = e.getNodeTarget();
+            	int u = e.getNodeSource().getId();
+                int v = e.getNodeTarget().getId();
                 double weight = e.getWeight();
                 if (
                     this.getDist()[u] != Double.MAX_VALUE && 

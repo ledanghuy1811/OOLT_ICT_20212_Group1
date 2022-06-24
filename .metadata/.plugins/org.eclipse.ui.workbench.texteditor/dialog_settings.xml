@@ -6,8 +6,9 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Dijkstra"/>
+		<item key="selection" value="settled"/>
 		<list key="findhistory">
+			<item value="settled"/>
 			<item value="dijkstra"/>
 			<item value="pq"/>
 			<item value="PriorityQueue"/>

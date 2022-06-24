@@ -11,16 +11,17 @@
     <fullyQualifiedTypeName name="java.lang.VerifyError"/>
     <fullyQualifiedTypeName name="java.util.Iterator"/>
     <fullyQualifiedTypeName name="algorithms.BFS"/>
-    <fullyQualifiedTypeName name="algorithms.Algorithms"/>
     <fullyQualifiedTypeName name="java.util.Set"/>
     <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
     <fullyQualifiedTypeName name="org.w3c.dom.Node"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.HashSet"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="graph.Edge"/>
     <fullyQualifiedTypeName name="algorithms.Dijkstra"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
     <fullyQualifiedTypeName name="graph.Vertex"/>
+    <fullyQualifiedTypeName name="algorithms.Algorithms"/>
+    <fullyQualifiedTypeName name="graph.Edge"/>
+    <fullyQualifiedTypeName name="algorithms.BellmanFord"/>
     <fullyQualifiedTypeName name="java.lang.Double"/>
 </qualifiedTypeNameHistroy>

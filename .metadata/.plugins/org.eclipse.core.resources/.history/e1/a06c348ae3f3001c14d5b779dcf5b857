@@ -1,0 +1,58 @@
+package context;
+
+import java.util.Scanner;
+
+import graph.Graph;
+
+public class SetGraph {
+	public Graph setGraph() {
+		Scanner keyBoard = new Scanner(System.in);
+		
+		System.out.print("Is graph directed(0-1): ");
+		int choice = keyBoard.nextInt();
+		boolean isDirected;
+		if(choice == 1)
+			isDirected = true;
+		else
+			isDirected = false;
+		System.out.print("Is graph weighted(0-1): ");
+		choice = keyBoard.nextInt();
+		boolean isWeighted;
+		if(choice == 1)
+			isWeighted = true;
+		else
+			isWeighted = false;
+		Graph aGraph = new Graph(isDirected, isWeighted);
+		
+		//set vertex and edge
+		System.out.println("Input vertex:");
+		while(true) {
+			System.out.print("Enter vertex id: ");
+			int id = keyBoard.nextInt();
+			aGraph.addVertex(id);
+			System.out.print("Enter 0 to exit: ");
+			int isExit = keyBoard.nextInt();
+			if(isExit == 0)
+				break;
+		}
+		System.out.println("Input edge:");
+		while(true) {
+			System.out.print("Enter edge node source id: ");
+			int idSource = keyBoard.nextInt();
+			System.out.print("Enter edge node target id: ");
+			int idTarget = keyBoard.nextInt();
+			if(isWeighted) {
+				System.out.print("Enter weight: ");
+				double weight = keyBoard.nextDouble();
+				aGraph.addEdge(idSource, idTarget, weight);
+			}
+			else 
+				aGraph.addEdge(idSource, idTarget, 0);
+			System.out.print("Enter 0 to exit: ");
+			int isExit = keyBoard.nextInt();
+			if(isExit == 0)
+				break;
+		}
+		return aGraph;
+	}
+}
