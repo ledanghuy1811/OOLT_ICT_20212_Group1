@@ -1,4 +1,4 @@
-package graphics.controller;
+package graphics;
 
 
 import javafx.scene.paint.Color;

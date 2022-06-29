@@ -3,6 +3,11 @@ package algorithms;
 import java.util.*;
 
 import graph.*;
+import graphics.NodeFX;
+import javafx.animation.SequentialTransition;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import step.StepInfo;
 
 public class Dijkstra extends Algorithm {
@@ -19,9 +24,19 @@ public class Dijkstra extends Algorithm {
     	this.settled = new HashSet<Vertex>();
     	this.pq = new PriorityQueue<Edge>(numVertex, new Edge());
     }
-    
-    //method
-    private void e_Neighbours(int u, ArrayList<Edge>[] adj)
+
+	public Dijkstra(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+		super(graph, numVertex, source);
+		this.stepLabel = stepLabel;
+		this.textFlow = textFlow;
+		this.canvasGroup = canvasGroup;
+		this.circles = circles;
+		this.settled = new HashSet<Vertex>();
+		this.pq = new PriorityQueue<Edge>(numVertex, new Edge());
+	}
+
+		//method
+    private void e_Neighbours(int u, ArrayList<Edge>[] adj, SequentialTransition st)
 	{
 		double edgeDistance = -1.0;
 		double newDistance = -1.0;
@@ -43,6 +58,7 @@ public class Dijkstra extends Algorithm {
 						v.getNodeTarget().getId(), 
 						newDistance, 
 						"Distance from " + u + " to " + v.getNodeTarget().getId() + " is: " + newDistance
+							, this.stepLabel, this.canvasGroup, this.circles, st, true, this.textFlow
 					);
 				}
 
@@ -59,6 +75,8 @@ public class Dijkstra extends Algorithm {
 	//override
 	@Override
 	public void execute() {
+		SequentialTransition st = new SequentialTransition();
+
 		Vertex src = this.getSource();
 		ArrayList<Edge> adj[]= this.getGraph().getEdge();
 
@@ -81,7 +99,7 @@ public class Dijkstra extends Algorithm {
 			// Removing the minimum distance node
 			// from the priority queue
 			int u = pq.remove().getNodeTarget().getId();
-			this.getStep().addStep(u, u, this.getDist()[u], "Verify node " + u);
+			this.getStep().addStep(u, u, this.getDist()[u], "Verify node " + u, this.stepLabel, this.canvasGroup, this.circles, st, false, this.textFlow);
 
 			// Adding the node whose distance is
 			// finalized
@@ -94,10 +112,12 @@ public class Dijkstra extends Algorithm {
 			// We don't have to call e_Neighbors(u)
 			// if u is already present in the settled set.
 			settled.add(new Vertex(u));
-			this.getStep().addStep(u, u, this.getDist()[u], "Settle node " + u);
+			this.getStep().addStep(u, u, this.getDist()[u], "Settle node " + u, this.stepLabel, this.canvasGroup, this.circles, st, true, this.textFlow);
 
-			e_Neighbours(u, adj);
+			e_Neighbours(u, adj, st);
 		}
+		st.onFinishedProperty();
+		st.play();
 	}
 	@Override
 	public void play() {

@@ -1,9 +1,13 @@
-package graphics.controller;
+package graphics;
+import algorithms.Algorithm;
+import algorithms.BFS;
+import algorithms.BellmanFord;
+import algorithms.Dijkstra;
 import com.jfoenix.controls.*;
+import context.Context;
 import graph.Graph;
+import input.*;
 import javafx.animation.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,26 +21,21 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.*;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -47,31 +46,6 @@ import java.util.logging.Logger;
 
 public class CanvasController implements Initializable {
     Graph myGraph;
-    public class NodeFX extends Circle {
-        public Point point;
-        public Label distance = new Label("Dist. : INFINITY");
-        public Label visitTime = new Label("Visit : 0");
-        public Label lowTime = new Label("Low : 0");
-        public Label id;
-        public boolean isSelected = false;
-
-        public NodeFX(double x, double y, double rad, String name) {
-            super(x, y, rad);
-            point = new Point((int) x, (int) y);
-            id = new Label(name);
-            myGraph.addVertex(Integer.parseInt(id.getText()));
-            System.out.printf("Add vertex %s to graph\n", id.getText());
-            canvasGroup.getChildren().add(id);
-            id.setLayoutX(x - 3);
-            id.setLayoutY(y - 9);
-            this.setOpacity(0.5);
-            this.setBlendMode(BlendMode.MULTIPLY);
-            this.setId("node");
-
-            circles.add(this);
-        }
-    }
-
     @FXML
     protected HiddenSidesPane hiddenPane;
     @FXML
@@ -85,6 +59,9 @@ public class CanvasController implements Initializable {
             belFordButton;
     @FXML
     protected ToggleGroup algoToggleGroup;
+
+    @FXML
+    protected Label stepLabel;
     @FXML
     protected Pane viewer;
     @FXML
@@ -95,17 +72,14 @@ public class CanvasController implements Initializable {
     protected Label sourceText = new Label("Source"), weight;
     @FXML
     protected Pane border;
-
     @FXML
     protected JFXNodesList nodeList;
-
-
     protected boolean menuBool = false;
     protected ContextMenu globalMenu;
 
     protected int nNode = 0, time = 500;
     protected boolean addNode = true, addEdge = false, calculate = false,
-            calculated = false;
+            calculated = false, pinned = false;;
     protected List<Label> distances = new ArrayList<Label>(), visitTime = new ArrayList<>(), lowTime = new ArrayList<Label>();
     protected boolean weighted = Panel1Controller.weighted,
             directed = Panel1Controller.directed,
@@ -115,7 +89,8 @@ public class CanvasController implements Initializable {
     protected NodeFX selectedNode = null;
     protected List<NodeFX> circles = new ArrayList<>();
     protected Arrow arrow;
-
+    public static TextArea textFlow = new TextArea();
+    public ScrollPane textContainer = new ScrollPane();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,7 +109,8 @@ public class CanvasController implements Initializable {
             dijkstraButton.setDisable(true);
         }
         // intialize graph
-        myGraph = new Graph(directed, weighted);
+        System.out.println("Directed: " + directed + "Weight: " + weighted);
+        myGraph = InputGraph.setGraph(directed, weighted);
         canvasBackButton.setOnAction(e -> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("Panel1FXML.fxml"));
@@ -158,6 +134,56 @@ public class CanvasController implements Initializable {
         detailLabel.setStyle("-fx-background-color:  #2A2B36;");
         detailLabel.setStyle("-fx-color:  white;");
         detailLabel.setLayoutX(35);
+        //Set TextFlow pane properties
+        textFlow.setPrefSize(hiddenRoot.getPrefWidth(), hiddenRoot.getPrefHeight() - 2);
+//        textFlow.prefHeightProperty().bind(hiddenRoot.heightProperty());
+        textFlow.setStyle("-fx-background-color: #dfe6e9;");
+        textFlow.setLayoutY(39);
+        textContainer.setLayoutY(textFlow.getLayoutY());
+        textFlow.setPadding(new Insets(5, 0, 0, 5));
+        textFlow.setEditable(false);
+        textContainer.setContent(textFlow);
+
+        //Set Pin/Unpin Button
+        JFXButton pinUnpin = new JFXButton();
+        pinUnpin.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
+        ImageView imgPin = new ImageView(new Image(getClass().getResourceAsStream("res/pinned.png")));
+        imgPin.setFitHeight(20);
+        imgPin.setFitWidth(20);
+        ImageView imgUnpin = new ImageView(new Image(getClass().getResourceAsStream("res/unpinned.png")));
+        imgUnpin.setFitHeight(20);
+        imgUnpin.setFitWidth(20);
+        pinUnpin.setGraphic(imgPin);
+
+        pinUnpin.setPrefSize(20, 39);
+        pinUnpin.setButtonType(JFXButton.ButtonType.FLAT);
+        pinUnpin.setStyle("-fx-background-color: #dcdde1;");
+        pinUnpin.setOnMouseClicked(e -> {
+            if (pinned) {
+                pinUnpin.setGraphic(imgPin);
+                hiddenPane.setPinnedSide(null);
+                pinned = false;
+            } else {
+                pinUnpin.setGraphic(imgUnpin);
+                hiddenPane.setPinnedSide(Side.RIGHT);
+                pinned = true;
+            }
+        });
+        //Add Label and TextFlow to hiddenPane
+        hiddenRoot.getChildren().addAll(pinUnpin, detailLabel, textContainer);
+        hiddenPane.setRight(hiddenRoot);
+        hiddenRoot.setOnMouseEntered(e -> {
+            hiddenPane.setPinnedSide(Side.RIGHT);
+            e.consume();
+        });
+        hiddenRoot.setOnMouseExited(e -> {
+            if (!pinned) {
+                hiddenPane.setPinnedSide(null);
+            }
+            e.consume();
+        });
+        hiddenPane.setTriggerDistance(60);
 
     }
 
@@ -174,13 +200,13 @@ public class CanvasController implements Initializable {
             if (!ev.getSource().equals(canvasGroup)) {
                 if (ev.getEventType() == MouseEvent.MOUSE_RELEASED && ev.getButton() == MouseButton.PRIMARY) {
                     if (menuBool == true) {
-                        System.out.println("here" + ev.getEventType());
                         menuBool = false;
                         return;
                     }
                     nNode++;
 
-                    NodeFX circle = new NodeFX(ev.getX(), ev.getY(), 1.2, String.valueOf(nNode));
+                    NodeFX circle = new NodeFX(ev.getX(), ev.getY(), 1.2, String.valueOf(nNode - 1) , myGraph, canvasGroup);
+                    circles.add(circle);
                     canvasGroup.getChildren().add(circle);
 
                     circle.setOnMousePressed(mouseHandler);
@@ -202,10 +228,74 @@ public class CanvasController implements Initializable {
 
     @FXML
     public void ResetHandle(ActionEvent event) {
+        ClearHandle(null);
+        nNode = 0;
+        canvasGroup.getChildren().clear();
+        canvasGroup.getChildren().addAll(viewer);
+        selectedNode = null;
+        circles = new ArrayList<NodeFX>();
+        distances = new ArrayList<Label>();
+        addNode = true;
+        addEdge = false;
+        calculate = false;
+        calculated = false;
+        addNodeButton.setSelected(true);
+        addEdgeButton.setSelected(false);
+        addEdgeButton.setDisable(true);
+        addNodeButton.setDisable(false);
+        clearButton.setDisable(true);
+        hiddenPane.setPinnedSide(null);
+        bfsButton.setDisable(true);
+        dijkstraButton.setDisable(true);
+        belFordButton.setDisable(true);
+        myGraph = InputGraph.setGraph(directed, weighted);
+        if (!weighted) {
+            bfsButton.setDisable(false);
+            bfsButton.setSelected(false);
+        }
+        if (weighted) {
+            dijkstraButton.setDisable(false);
+            dijkstraButton.setSelected(false);
+            belFordButton.setDisable(false);
+            belFordButton.setSelected(false);
+        }
+        textFlow.setText("");
     }
 
     @FXML
     public void ClearHandle(ActionEvent event) {
+        menuBool = false;
+        selectedNode = null;
+        calculated = false;
+        System.out.println("IN CLEAR:" + circles.size());
+        for (NodeFX n : circles) {
+            n.isSelected = false;
+            FillTransition ft1 = new FillTransition(Duration.millis(300), n);
+            ft1.setToValue(Color.BLACK);
+            ft1.play();
+        }
+        for (Label x : distances) {
+            x.setText("Distance : INFINITY");
+            canvasGroup.getChildren().remove(x);
+        }
+        distances = new ArrayList<>();
+        addNodeButton.setDisable(false);
+        addEdgeButton.setDisable(false);
+        if (!weighted) {
+            bfsButton.setDisable(false);
+            bfsButton.setSelected(false);
+        }
+        if (weighted) {
+            dijkstraButton.setDisable(false);
+            dijkstraButton.setSelected(false);
+            belFordButton.setDisable(false);
+            belFordButton.setSelected(false);
+        }
+        bfs = false;
+        dijkstra = false;
+        bf = false;
+        textFlow.setText("");
+
     }
 
     @FXML
@@ -294,13 +384,15 @@ public class CanvasController implements Initializable {
         dijkstra = true;
     }
 
+    public static Algorithm inputAlgorithms(Graph myGraph, InputAlgorithm algo, int sourceId, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+		return algo.inputAlgorithm(myGraph, sourceId, stepLabel, canvasGroup, circles, textFlow);
+	}
     protected EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent mouseEvent) {
-
-            System.out.println("Handling...!");
             NodeFX circle = (NodeFX) mouseEvent.getSource();
+            System.out.println("Circle " + circle.id.getText());
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED && mouseEvent.getButton() == MouseButton.PRIMARY) {
                 if (!circle.isSelected) {
                     if (selectedNode != null) {
@@ -345,10 +437,8 @@ public class CanvasController implements Initializable {
                             System.out.printf("Add edge %s to %s in graph", selectedNode.id.getText(), circle.id.getText());
 
                         }
-                        System.out.println("Node: " + addNode + " Edge: " + addEdge);
 
                         if (addNode || (calculate && !calculated) || addEdge) {
-                            System.out.println("Run also");
                             selectedNode.isSelected = false;
                             FillTransition ft1 = new FillTransition(Duration.millis(300), selectedNode, Color.RED, Color.BLACK);
                             ft1.play();
@@ -364,18 +454,36 @@ public class CanvasController implements Initializable {
 
                     // WHAT TO DO WHEN SELECTED ON ACTIVE ALGORITHM
                     if (calculate && !calculated) {
+                        // Add Infomation of dist
+                        for (NodeFX n : circles) {
+                            distances.add(n.distance);
+                            n.distance.setLayoutX(n.point.x + 20);
+                            n.distance.setLayoutY(n.point.y);
+                            if (!canvasGroup.getChildren().contains(n.distance)) {
+                                canvasGroup.getChildren().add(n.distance);
+                            }
+                        }
+                        circle.distance.setText("Dist. : 0");
+                        Algorithm algo;
+                        Context context = new Context();
                         if (bfs) {
+                            algo = inputAlgorithms(myGraph, new InputBFS(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
+                            context.setUpAlgorithm((BFS) algo);
+                            context.play((BFS) algo);
                         } else if (dijkstra) {
+                            algo = inputAlgorithms(myGraph, new InputDijkstra(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
+                            context.setUpAlgorithm((Dijkstra) algo);
+                            context.play((Dijkstra) algo);
                         } else if (bf) {
+                            algo = inputAlgorithms(myGraph, new InputBellmanFord(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
+                            context.setUpAlgorithm((BellmanFord) algo);
+                            context.play((BellmanFord) algo);
                         }
                         // belmond ford in here
 
                         calculated = true;
-                    } else if (calculate && calculated) {
-
                     }
                 } else {
-                    System.out.println("Disable select");
                     circle.isSelected = false;
                     FillTransition ft1 = new FillTransition(Duration.millis(300), circle, Color.RED, Color.BLACK);
                     ft1.play();

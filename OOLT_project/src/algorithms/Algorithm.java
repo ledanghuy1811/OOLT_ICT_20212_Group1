@@ -1,12 +1,23 @@
 package algorithms;
 
-import java.util.Scanner;
+import java.util.List;
 
 import graph.*;
+import graphics.NodeFX;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import step.*;
+import javafx.scene.Group;
 
 public abstract class Algorithm {
+	//FX attributes
+	Label stepLabel;
+	Group canvasGroup;
+	List<NodeFX> circles;
+
+	TextArea textFlow;
 	//attributes
+
 	private Graph graph;
 	private int numVertex;
 	private Vertex source;
@@ -17,10 +28,21 @@ public abstract class Algorithm {
 	public Algorithm() {
 		
 	}
-	public Algorithm(Graph graph, int numVertex, Vertex source) {
+	public Algorithm(Graph graph, int numVertex, Vertex source){
 		this.graph = graph;
 		this.numVertex = numVertex;
 		this.source = source;
+		this.dist = new double[numVertex];
+	}
+
+	public Algorithm(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+		this.graph = graph;
+		this.numVertex = numVertex;
+		this.source = source;
+		this.stepLabel = stepLabel;
+		this.canvasGroup = canvasGroup;
+		this.textFlow = textFlow;
+		this.circles = circles;
 		this.dist = new double[numVertex];
 	}
 	

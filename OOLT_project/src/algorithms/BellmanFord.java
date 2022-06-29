@@ -1,7 +1,14 @@
 package algorithms;
 
 import graph.*;
+import graphics.NodeFX;
+import javafx.animation.SequentialTransition;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import step.StepInfo;
+
+import java.util.List;
 
 public class BellmanFord extends Algorithm {
 	//constructor
@@ -11,10 +18,20 @@ public class BellmanFord extends Algorithm {
 	public BellmanFord(Graph graph, int numVertex, Vertex source) {
 		super(graph, numVertex, source);
 	}
-	
-	// override
+
+    public BellmanFord(Graph graph, int numVertex, Vertex source, Label distances, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+        super(graph, numVertex, source);
+        this.stepLabel = distances;
+        this.canvasGroup = canvasGroup;
+        this.circles = circles;
+        this.textFlow = textFlow;
+    }
+
+    // override
 	@Override
 	public void execute() {
+        SequentialTransition st = new SequentialTransition();
+        Vertex s = this.getSource();
 		//Initialize distances from src to all other
         // vertices as INFINITE
 		for (int i = 0; i < this.getNumVertex(); ++i)
@@ -26,18 +43,18 @@ public class BellmanFord extends Algorithm {
         // have at-most |V| - 1 edges
         for (int i = 1; i < this.getNumVertex(); ++i) {
             for (int j = 0; j < this.getNumVertex(); ++j) {
-            	this.getStep().addStep(j, j, 0, "Verify node " + j);
+            	this.getStep().addStep(j, j, 0, "Verify node " + j, this.stepLabel, this.canvasGroup, this.circles, st, false, this.textFlow);
                 for(Edge e : this.getGraph().getEdge()[j]) {
                 	int u = e.getNodeSource().getId();
                     int v = e.getNodeTarget().getId();
                     double weight = e.getWeight();
-                    this.getStep().addStep(u, v, weight, "Check node " + u + " and " + v + " with weight: " + weight);
+                    this.getStep().addStep(u, v, weight, "Check node " + u + " and " + v + " with weight: " + weight,  this.stepLabel, this.canvasGroup, this.circles, st, false, this.textFlow);
                     if (
                     	this.getDist()[u] != Double.MAX_VALUE && 
                     	this.getDist()[u] + weight < this.getDist()[v]
                     ) {
                         this.setOneDist(v, this.getDist()[u] + weight);
-                        this.getStep().addStep(u, v, weight, "Settle node " + u + " and " + v + " with weight: " + weight);
+                        this.getStep().addStep(u, v, this.getDist()[u] + weight, "Settle node " + u + " and " + v + " with weight: " + weight,  this.stepLabel, this.canvasGroup, this.circles, st, true, this.textFlow);
                     }
                 }
             }
@@ -56,11 +73,13 @@ public class BellmanFord extends Algorithm {
                     this.getDist()[u] + weight < this.getDist()[v]
                 ) {
                     System.out.println("Graph contains negative weight cycle");
-                    this.getStep().addStep(u, v, weight, "Graph contains negative weight cycle");
+                    this.getStep().addStep(u, v, weight, "Graph contains negative weight cycle", this.stepLabel, this.canvasGroup, this.circles, st, false, this.textFlow);
                     return;
                 }
             }
         }
+        st.onFinishedProperty();
+        st.play();
 	}
 	@Override
 	public void play() {
