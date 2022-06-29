@@ -2,8 +2,9 @@ package main;
 
 import java.util.Scanner;
 
-import algorithms.Algorithms;
+import algorithms.Algorithm;
 import context.*;
+import input.*;
 
 public class Main {
 	public static int showMenu() {
@@ -21,26 +22,31 @@ public class Main {
 		return choice;
 	}
 	
+	public static Algorithm inputAlgorithms(InputAlgorithm algo) {
+		return algo.inputAlgorithm();
+	}
+	
 	public static void main(String[] args) {
 		int choice;
-		Algorithms aAlgo;
+		Algorithm aAlgo;
+		Context context = new Context();
 		do {
 			choice = showMenu();
 			switch(choice) {
 			case 1:
-				aAlgo = Context.setUpAlgorithms(new SetBFS());
-				aAlgo.execute();
-				aAlgo.play();
+				aAlgo = inputAlgorithms(new InputBFS());
+				context.setUpAlgorithm(aAlgo);
+				context.play(aAlgo);
 				break;
 			case 2:
-				aAlgo = Context.setUpAlgorithms(new SetDijkstra());
-				aAlgo.execute();
-				aAlgo.play();
+				aAlgo = inputAlgorithms(new InputDijkstra());
+				context.setUpAlgorithm(aAlgo);
+				context.play(aAlgo);
 				break;
 			case 3:
-				aAlgo = Context.setUpAlgorithms(new SetBellmanFord());
-				aAlgo.execute();
-				aAlgo.play();
+				aAlgo = inputAlgorithms(new InputBellmanFord());
+				context.setUpAlgorithm(aAlgo);
+				context.play(aAlgo);
 				break;
 			case 0:
 				System.out.println("Thanks for using!");

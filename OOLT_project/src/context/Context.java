@@ -5,7 +5,16 @@ import graph.*;
 import java.util.Scanner;
 
 public class Context {
-	public static Algorithms setUpAlgorithms(SetAlgorithms algo) {
-		return algo.setAlgorithms();
+	//constructor
+	public Context() {
+		
+	}
+	
+	// method
+	public void setUpAlgorithm(Algorithm algo) {
+		algo.execute();
+	}
+	public void play(Algorithm algo) {
+		algo.play();
 	}
 }

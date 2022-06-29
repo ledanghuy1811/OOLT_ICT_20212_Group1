@@ -3,8 +3,9 @@ package algorithms;
 import java.util.Iterator;
 import java.util.LinkedList;
 import graph.*;
+import step.*;
 
-public class BFS extends Algorithms {
+public class BFS extends Algorithm {
 	private LinkedList<Vertex> adj[];
 	private static int nIndex = 0;
 	
@@ -28,6 +29,7 @@ public class BFS extends Algorithms {
 		return adj;
 	}
 	
+	
 	//override method
 	@Override
 	public void execute() {
@@ -49,6 +51,7 @@ public class BFS extends Algorithms {
 //			System.out.print(s.getId() + " ");
 			this.setOneDist(nIndex, s.getId());
 			nIndex ++;
+			this.getStep().addStep(s.getId(), s.getId(), 0, "Verify node " + s.getId());
 			
 			// Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
@@ -61,6 +64,7 @@ public class BFS extends Algorithms {
                 {
                     visited[n.getId()] = true;
                     queue.add(n);
+                    this.getStep().addStep(s.getId(), n.getId(), 0, "Check node " + n.getId());
                 }
             }
 		}
@@ -72,5 +76,8 @@ public class BFS extends Algorithms {
 			System.out.print((int)this.getDist()[i] + "\t");
 		}
 		System.out.println();
+		for(StepInfo i : this.getStep().getStepDetail()) {
+			System.out.println(i.getDetail());
+		}
 	}
 }

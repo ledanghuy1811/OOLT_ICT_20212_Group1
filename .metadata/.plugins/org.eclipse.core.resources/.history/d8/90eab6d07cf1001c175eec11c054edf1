@@ -1,8 +1,0 @@
-package algorithms;
-
-import graph.*;
-
-public abstract class Algorithms {
-	//attributes
-	Graph graph = new Graph();
-}

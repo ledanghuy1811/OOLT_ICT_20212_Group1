@@ -1,0 +1,125 @@
+package graph;
+
+import java.util.*;
+
+public class Graph {
+	public static final int MAX_NUMBERS_EDGE = 1000;
+	
+	// attribute
+	private ArrayList<Vertex> vertex = new ArrayList<Vertex>();
+	private ArrayList<Edge>[] edge = new ArrayList[MAX_NUMBERS_EDGE];
+	private boolean isDirected;
+	private boolean isWeight;
+	
+	//constructor
+	public Graph() {
+		
+	}
+	public Graph(boolean isDirected, boolean isWeighted) {
+		this.isDirected = isDirected;
+		this.isWeight = isWeighted;
+		for(int i = 0; i < MAX_NUMBERS_EDGE; i++)
+			this.edge[i] = new ArrayList<Edge>();
+	}
+	
+	//getter and setter
+	public ArrayList<Vertex> getVertex() {
+		return this.vertex;
+	}
+	public ArrayList<Edge>[] getEdge() {
+		return this.edge;
+	}
+	public boolean getIsDirected() {
+		return this.isDirected;
+	}
+	public boolean getIsWeight() {
+		return isWeight;
+	}
+	
+	// method
+	public void addVertex(int vertex) {
+		Vertex temp = new Vertex(vertex);
+		this.vertex.add(temp);
+	}
+	public void addEdge(int source, int target, double weight) {
+		Edge temp;
+		if(this.getIsDirected()) 
+			temp = new Edge(source, target, weight);
+		else {
+			if(this.getIsWeight())
+				temp = new Edge(source, target, weight);
+			else
+				temp = new Edge(source, target);
+		}
+		this.edge[source].add(temp);
+	}
+	public ArrayList<Vertex> getAdjacent(int id) {
+		ArrayList<Vertex> temp = new ArrayList<Vertex>();
+		for(Edge edge: this.getEdge()[id]) {
+			temp.add(edge.getNodeTarget());
+		}
+		return temp;
+	}
+	public Vertex getOneVertex(int id) {
+		for(Vertex v : this.getVertex()) 
+			if(id == v.getId())
+				return v;
+		return null;
+	}
+	public Edge getOneEdge(int source, int target) {
+		for(Edge e : this.getEdge()[source])
+			if(target == e.getNodeTarget().getId())
+				return e;
+		return null;
+	}
+	
+	//input method
+	public void inutInfo() {
+		Scanner keyBoard = new Scanner(System.in);
+		// need construct before input
+		for(int i = 0; i < MAX_NUMBERS_EDGE; i++)
+			this.edge[i] = new ArrayList<Edge>();
+		
+		System.out.println("Is graph directed(0-1): ");
+		int choice = keyBoard.nextInt();
+		if(choice == 1)
+			this.isDirected = true;
+		else
+			this.isDirected = false;
+		System.out.println("Is graph weighted(0-1): ");
+		choice = keyBoard.nextInt();
+		if(choice == 1)
+			this.isWeight = true;
+		else
+			this.isWeight = false;
+		
+		//set vertex and edge
+		System.out.println("Input vertex:");
+		while(true) {
+			System.out.println("Enter vertex id (-1 to exit): ");
+			int id = keyBoard.nextInt();
+			if(id < 0)
+				break;
+			this.addVertex(id);
+		}
+		System.out.println("Input edge:");
+		while(true) {
+			System.out.println("Enter edge node source id: ");
+			int idSource = keyBoard.nextInt();
+			System.out.println("Enter edge node target id: ");
+			int idTarget = keyBoard.nextInt();
+			if(this.isWeight) {
+				System.out.println("Enter weight: ");
+				double weight = keyBoard.nextDouble();
+				this.addEdge(idSource, idTarget, weight);
+			}
+			else 
+				this.addEdge(idSource, idTarget, 0);
+			System.out.println("Enter 0 to exit: ");
+			int isExit = keyBoard.nextInt();
+			if(isExit == 0)
+				break;
+		}
+//		keyBoard.close();
+	}
+}
