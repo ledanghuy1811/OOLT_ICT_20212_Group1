@@ -51,7 +51,7 @@ public class BFS extends Algorithm {
 //			System.out.print(s.getId() + " ");
 			this.setOneDist(nIndex, s.getId());
 			nIndex ++;
-			this.getStep().addStep(s.getId(), s.getId(), 0, "Verify node " + s.getId());
+			this.getStep().addStep(s.getId(), s.getId(), 1, "Verify node " + s.getId());
 			
 			// Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
