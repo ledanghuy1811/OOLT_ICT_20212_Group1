@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.HiddenSidesPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.controller.CanvasController">
+   <children>
+      <StackPane fx:id="stackRoot" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="anchorRoot" layoutX="1.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane fx:id="border" layoutX="199.0" prefHeight="600.0" prefWidth="1001.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Group fx:id="canvasGroup" layoutX="200.0" layoutY="-3.0" onMouseClicked="#handle" onMouseDragged="#handle" onMousePressed="#handle" onMouseReleased="#handle">
+               <children>
+                  <Pane fx:id="viewer" onMouseClicked="#handle" onMouseDragged="#handle" onMousePressed="#handle" onMouseReleased="#handle" prefHeight="603.0" prefWidth="997.0" style="-fx-background-color: #E0E0E0;">
+
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
+                  </Pane>
+               </children>
+            </Group>
+
+            <HiddenSidesPane fx:id="hiddenPane" layoutX="400.0" prefHeight="600.0" prefWidth="1001.0" style="-fx-background-color: #E0E0E0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+
+               <cursor>
+                  <Cursor fx:constant="CROSSHAIR" />
+               </cursor>
+            </HiddenSidesPane>
+            <ImageView fx:id="openHidden" fitHeight="44.0" fitWidth="44.0" layoutX="856.0" layoutY="289.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="287.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="289.0">
+               <image>
+                  <Image url="@../res/openHidden.png" />
+               </image>
+            </ImageView>
+
+            <AnchorPane layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="300.0" snapToPixel="false" style="-fx-background-color: #2A2B36; -fx-min-width: 100%;" AnchorPane.bottomAnchor="-1.0" AnchorPane.topAnchor="1.0">
+
+               <children>
+                  <JFXButton fx:id="canvasBackButton" contentDisplay="GRAPHIC_ONLY" prefHeight="30.0" prefWidth="34.0">
+                     <graphic>
+                        <ImageView fx:id="canvasBack" fitHeight="29.0" fitWidth="28.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@res/arrow_back_black_96x96.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <GridPane alignment="CENTER" hgap="10.0" layoutY="154.0" prefHeight="269.0" prefWidth="300.0" vgap="5.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="63.6000244140625" minHeight="10.0" prefHeight="36.80001831054686" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="63.6000244140625" minHeight="10.0" prefHeight="36.80001831054686" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="63.6000244140625" minHeight="10.0" prefHeight="36.80001831054686" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="61.0" minHeight="0.0" prefHeight="0.0" valignment="CENTER" />
+                     </rowConstraints>
+                     <children>
+                        <JFXToggleButton id="spec" fx:id="bfsButton" alignment="BOTTOM_LEFT" onAction="#BFSHandle" prefHeight="59.0" prefWidth="290.0" size="9.0" text="BFS" textFill="WHITE" unToggleColor="CHOCOLATE">
+                           <font>
+                              <Font name="Roboto Light" size="20.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="algoToggleGroup" />
+                           </toggleGroup>
+                        </JFXToggleButton>
+
+                        <JFXToggleButton fx:id="dijkstraButton" alignment="BOTTOM_LEFT" layoutX="15.0" layoutY="91.0" onAction="#DijkstraHandle" prefHeight="59.0" prefWidth="294.0" size="9.0" text="Dijkstra" textFill="WHITE" toggleGroup="$algoToggleGroup" unToggleColor="CHOCOLATE" GridPane.rowIndex="1">
+
+                           <font>
+                              <Font name="Roboto Light" size="20.0" />
+                           </font>
+                        </JFXToggleButton>
+
+                        <JFXToggleButton fx:id="belFordButton" alignment="TOP_LEFT" onAction="#BFHandler" prefHeight="59.0" prefWidth="299.0" size="9.0" text="Belmond" textFill="WHITE" unToggleColor="CHOCOLATE" GridPane.rowIndex="2">
+
+                           <toggleGroup>
+                              <ToggleGroup fx:id="algoToggleGroup2" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="Roboto Light" size="20.0" />
+                           </font>
+                        </JFXToggleButton>
+
+                        <JFXToggleButton fx:id="addEdgeButton" onAction="#AddEdgeHandle" prefHeight="58.0" prefWidth="164.0" text="Add Edge" textFill="BISQUE" toggleGroup="$algoToggleGroup" unToggleColor="BISQUE" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </JFXToggleButton>
+                        <JFXToggleButton fx:id="addNodeButton" onAction="#AddNodeHandle" prefHeight="19.0" prefWidth="162.0" text="Add Node" textFill="BISQUE" toggleGroup="$algoToggleGroup" unToggleColor="BISQUE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+
+                           <font>
+                              <Font name="Junction Regular Regular" size="13.0" />
+                           </font>
+                        </JFXToggleButton>
+                     </children>
+                     <padding>
+
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </GridPane>
+                  <JFXButton fx:id="clearButton" buttonType="RAISED" layoutX="22.0" layoutY="445.0" onAction="#ClearHandle" prefHeight="46.0" prefWidth="96.0" style="-fx-background-color: #FFF8DC; -fx-text-fill: black;" text="CLEAR" textFill="#d3c5c5">
+                     <font>
+                        <Font name="Junction Regular Regular" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Label alignment="CENTER" layoutX="52.0" layoutY="116.0" prefHeight="31.0" prefWidth="196.0" text="Algorithms" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                     <font>
+                        <Font name="Calibri Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="resetButton" buttonType="RAISED" layoutX="189.0" layoutY="445.0" onAction="#ResetHandle" prefHeight="46.0" prefWidth="96.0" style="-fx-background-color: #FFDEAD; -fx-text-fill: black;" text="RESET" textFill="#d3c5c5">
+                     <font>
+                        <Font name="Junction Regular Regular" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
