@@ -1,0 +1,62 @@
+package algorithms;
+
+import java.util.Scanner;
+
+import graph.*;
+
+public abstract class Algorithms {
+	//attributes
+	private Graph graph;
+	private int numVertex;
+	private Vertex source;
+	private double dist[];
+	
+	//constructor
+	public Algorithms() {
+		
+	}
+	public Algorithms(Graph graph, int numVertex, Vertex source) {
+		this.graph = graph;
+		this.numVertex = numVertex;
+		this.source = source;
+		this.dist = new double[numVertex];
+	}
+	
+	//getter and setter
+	public int getNumVertex() {
+		return numVertex;
+	}
+	public Graph getGraph() {
+		return graph;
+	}
+	public Vertex getSource() {
+		return source;
+	}
+    public double[] getDist() {
+		return dist;
+	}
+    public void setOneDist(int index, double value) {
+		this.dist[index] = value;
+	}
+    
+    //method
+    public void inputInfo() {
+		Scanner keyBoard = new Scanner(System.in);
+		
+		Graph aGraph = new Graph();
+		aGraph.inutInfo();
+		this.graph = aGraph;
+		int numVertex = aGraph.getVertex().size();
+		this.numVertex = numVertex;
+		System.out.println("Enter node source id: ");
+		int sourceId = keyBoard.nextInt();
+		this.source = new Vertex(sourceId);
+		
+		return new BFS(aGraph, numVertex, new Vertex(sourceId));
+	}
+	
+
+	//to override
+	public abstract void execute();
+	public abstract void play();
+}

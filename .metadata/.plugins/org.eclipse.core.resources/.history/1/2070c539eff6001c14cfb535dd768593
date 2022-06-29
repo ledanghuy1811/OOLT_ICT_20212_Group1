@@ -1,0 +1,7 @@
+package context;
+
+import algorithms.Algorithm;
+
+public interface InputAlgorithms {
+	public Algorithm inputAlgorithms();
+}

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
-    <fullyQualifiedTypeName name="graph.Graph"/>
     <fullyQualifiedTypeName name="java.awt.print.Book"/>
     <fullyQualifiedTypeName name="java.util.LinkedList"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
@@ -16,12 +14,22 @@
     <fullyQualifiedTypeName name="org.w3c.dom.Node"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.HashSet"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="algorithms.Dijkstra"/>
     <fullyQualifiedTypeName name="java.util.Vector"/>
-    <fullyQualifiedTypeName name="graph.Vertex"/>
-    <fullyQualifiedTypeName name="algorithms.Algorithms"/>
     <fullyQualifiedTypeName name="graph.Edge"/>
-    <fullyQualifiedTypeName name="algorithms.BellmanFord"/>
     <fullyQualifiedTypeName name="java.lang.Double"/>
+    <fullyQualifiedTypeName name="algorithms.Dijkstra"/>
+    <fullyQualifiedTypeName name="algorithms.BellmanFord"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="context.SetAlgorithms"/>
+    <fullyQualifiedTypeName name="context.SetBFS"/>
+    <fullyQualifiedTypeName name="context.SetDijkstra"/>
+    <fullyQualifiedTypeName name="context.SetBellmanFord"/>
+    <fullyQualifiedTypeName name="algorithms.Algorithms"/>
+    <fullyQualifiedTypeName name="graph.Graph"/>
+    <fullyQualifiedTypeName name="graph.Vertex"/>
+    <fullyQualifiedTypeName name="context.Context"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="step.Step"/>
+    <fullyQualifiedTypeName name="step.StepInfo"/>
 </qualifiedTypeNameHistroy>

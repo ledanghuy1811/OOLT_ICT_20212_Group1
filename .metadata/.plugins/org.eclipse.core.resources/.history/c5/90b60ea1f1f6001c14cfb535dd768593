@@ -1,0 +1,8 @@
+package step;
+
+public class StepInfo {
+	private int nodeSource;
+	private int nodeTarget;
+	private double weight;
+	private String detail;
+}

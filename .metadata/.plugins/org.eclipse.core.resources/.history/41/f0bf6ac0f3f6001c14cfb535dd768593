@@ -1,0 +1,18 @@
+package step;
+
+import java.util.ArrayList;
+
+public class Step {
+	// attribute
+	private ArrayList<StepInfo> stepDetail = new ArrayList<StepInfo>();
+	
+	//constructor
+	public Step() {
+		
+	}
+	
+	//getter
+	public ArrayList<StepInfo> getStepDetail() {
+		return stepDetail;
+	}
+}

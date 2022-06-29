@@ -1,0 +1,17 @@
+package context;
+
+import algorithms.*;
+import graph.*;
+import java.util.Scanner;
+
+public class Context {
+	public static Algorithms setUpAlgorithms(SetAlgorithms algo) {
+		return algo.setAlgorithms();
+	}
+	public void setAlgorithms(Algorithms algo) {
+		algo.execute();
+	}
+	public void play(Algorithms algo) {
+		algo.play();
+	}
+}

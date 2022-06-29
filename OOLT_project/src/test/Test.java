@@ -1,7 +1,7 @@
 package test;
 
 import java.util.ArrayList;
-import algorithms.Algorithms;
+import algorithms.Algorithm;
 import algorithms.*;
 import graph.*;
 

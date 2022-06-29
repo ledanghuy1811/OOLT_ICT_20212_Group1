@@ -3,8 +3,9 @@ package algorithms;
 import java.util.*;
 
 import graph.*;
+import step.StepInfo;
 
-public class Dijkstra extends Algorithms {
+public class Dijkstra extends Algorithm {
 	// Member variables of this class
     private Set<Vertex> settled;
     private PriorityQueue<Edge> pq;
@@ -35,8 +36,15 @@ public class Dijkstra extends Algorithms {
 				newDistance = this.getDist()[u] + edgeDistance;
 
 				// If new distance is cheaper in cost
-				if (newDistance < this.getDist()[v.getNodeTarget().getId()])
+				if (newDistance < this.getDist()[v.getNodeTarget().getId()]) {
 					this.setOneDist(v.getNodeTarget().getId(), newDistance);
+					this.getStep().addStep(
+						u, 
+						v.getNodeTarget().getId(), 
+						newDistance, 
+						"Distance from " + u + " to " + v.getNodeTarget().getId() + " is: " + newDistance
+					);
+				}
 
 				// Add the current node to the queue
 				pq.add(new Edge(
@@ -73,6 +81,7 @@ public class Dijkstra extends Algorithms {
 			// Removing the minimum distance node
 			// from the priority queue
 			int u = pq.remove().getNodeTarget().getId();
+			this.getStep().addStep(u, u, this.getDist()[u], "Verify node " + u);
 
 			// Adding the node whose distance is
 			// finalized
@@ -85,6 +94,7 @@ public class Dijkstra extends Algorithms {
 			// We don't have to call e_Neighbors(u)
 			// if u is already present in the settled set.
 			settled.add(new Vertex(u));
+			this.getStep().addStep(u, u, this.getDist()[u], "Settle node " + u);
 
 			e_Neighbours(u, adj);
 		}
@@ -94,5 +104,9 @@ public class Dijkstra extends Algorithms {
 		System.out.println("Dijkstra is: ");
 		for (int i = 0; i < this.getDist().length; i++)
 			System.out.println(0 + " to " + i + " is " + this.getDist()[i]);
+		System.out.println();
+		for(StepInfo i : this.getStep().getStepDetail()) {
+			System.out.println(i.getDetail());
+		}
 	}
 }

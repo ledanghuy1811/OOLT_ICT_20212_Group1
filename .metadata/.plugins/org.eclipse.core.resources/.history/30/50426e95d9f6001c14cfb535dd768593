@@ -1,0 +1,58 @@
+package main;
+
+import java.util.Scanner;
+
+import algorithms.Algorithms;
+import context.*;
+
+public class Main {
+	public static int showMenu() {
+		Scanner keyBoard = new Scanner(System.in);
+		
+		System.out.println("----------------------------------------------------");
+		System.out.println("---------------OPTION OF ALGORITHMS-----------------");
+		System.out.println("1. BFS");
+		System.out.println("2. Dijkstra");
+		System.out.println("3. Bellman-Ford");
+		System.out.println("0. Exit");
+		System.out.println("----------------------------------------------------");
+		System.out.println("Your choice: ");
+		int choice = keyBoard.nextInt();
+		return choice;
+	}
+	
+	public static Algorithms inputAlgorithms(SetAlgorithms algo) {
+		return algo.setAlgorithms();
+	}
+	
+	public static void main(String[] args) {
+		int choice;
+		Algorithms aAlgo;
+		do {
+			choice = showMenu();
+			switch(choice) {
+			case 1:
+				aAlgo = inputAlgorithms(new SetBFS());
+				Context.setAlgorithms(aAlgo);
+				Context.play(aAlgo);
+				break;
+			case 2:
+				aAlgo = inputAlgorithms(new SetDijkstra());
+				aAlgo.execute();
+				aAlgo.play();
+				break;
+			case 3:
+				aAlgo = inputAlgorithms(new SetBellmanFord());
+				aAlgo.execute();
+				aAlgo.play();
+				break;
+			case 0:
+				System.out.println("Thanks for using!");
+				break;
+			default:
+				System.out.println("Wrong option!");
+				break;
+			}
+		}while(choice != 0);
+	}
+}

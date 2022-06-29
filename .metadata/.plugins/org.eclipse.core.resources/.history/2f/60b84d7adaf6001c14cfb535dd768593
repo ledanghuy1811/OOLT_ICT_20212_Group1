@@ -1,0 +1,7 @@
+package context;
+
+import algorithm.Algorithms;
+
+public interface SetAlgorithms {
+	public Algorithms setAlgorithms();
+}
