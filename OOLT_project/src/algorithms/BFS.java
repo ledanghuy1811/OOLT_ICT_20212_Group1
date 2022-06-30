@@ -33,6 +33,7 @@ public class BFS extends Algorithm {
 	//override method
 	@Override
 	public void execute() {
+		nIndex = 0;
 		Vertex s = this.getSource();
 		// Mark all the vertices as not visited(By default
         // set as false)
@@ -57,8 +58,7 @@ public class BFS extends Algorithm {
             // If a adjacent has not been visited, then mark it
             // visited and enqueue it
 			Iterator<Vertex> i = this.adj[s.getId()].listIterator();
-			while (i.hasNext())
-            {
+			while (i.hasNext()) {
                 Vertex n = i.next();
                 if (!visited[n.getId()])
                 {
@@ -67,6 +67,14 @@ public class BFS extends Algorithm {
                     this.getStep().addStep(s.getId(), n.getId(), 1, "Check node " + n.getId());
                 }
             }
+//			if(queue.size() == 0) {
+//				nIndex -= 1;
+//				for(int j = 0; j < this.getNumVertex(); j++) 
+//					if(visited[j] == false) {
+//						queue.add(new Vertex(j));
+//					}
+//				System.out.println("hi");
+//			}
 		}
 	}
 	@Override

@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="settled"/>
+		<item key="selection" value="nIndex"/>
 		<list key="findhistory">
+			<item value="target"/>
+			<item value="nIndex"/>
 			<item value="settled"/>
 			<item value="dijkstra"/>
 			<item value="pq"/>
