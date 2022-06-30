@@ -80,7 +80,7 @@ public class CanvasController implements Initializable {
     protected int nNode = 0, time = 500;
     protected boolean addNode = true, addEdge = false, calculate = false,
             calculated = false, pinned = false;;
-    protected List<Label> distances = new ArrayList<Label>(), visitTime = new ArrayList<>(), lowTime = new ArrayList<Label>();
+    protected List<Label> distances = new ArrayList<Label>();
     protected boolean weighted = Panel1Controller.weighted,
             directed = Panel1Controller.directed,
             bfs = true, dijkstra = true, bf = true;
@@ -384,7 +384,7 @@ public class CanvasController implements Initializable {
         dijkstra = true;
     }
 
-    public static Algorithm inputAlgorithms(Graph myGraph, InputAlgorithm algo, int sourceId, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+    public Algorithm inputAlgorithms(Graph myGraph, InputAlgorithm algo, int sourceId, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
 		return algo.inputAlgorithm(myGraph, sourceId, stepLabel, canvasGroup, circles, textFlow);
 	}
     protected EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {

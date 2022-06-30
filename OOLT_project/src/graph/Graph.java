@@ -42,14 +42,19 @@ public class Graph {
 		this.vertex.add(temp);
 	}
 	public void addEdge(int source, int target, double weight) {
-		Edge temp;
-		if(this.getIsDirected()) 
+		Edge temp;		
+		if(this.getIsDirected()) {
 			temp = new Edge(source, target, weight);
+		}
 		else {
-			if(this.getIsWeight())
+			if(this.getIsWeight()) {
 				temp = new Edge(source, target, weight);
-			else
-				temp = new Edge(source, target);
+				this.edge[target].add(new Edge(target, source, weight));
+			}
+			else {
+				temp = new Edge(source, target, weight);
+				this.edge[target].add(new Edge(target, source, weight));
+			}
 		}
 		this.edge[source].add(temp);
 	}
