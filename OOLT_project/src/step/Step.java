@@ -29,7 +29,6 @@ public class Step {
 	}
 
 	public void addStep(int nodeSource, int nodeTarget, double weight, String detail, Label stepLabel, Group canvasGroup, List<NodeFX> circles, SequentialTransition st, boolean isSwap, TextArea textFlow) {
-		System.out.println(circles);
 		this.stepDetail.add(new StepInfo(nodeSource, nodeTarget, weight, detail, stepLabel, canvasGroup, circles, st, isSwap, textFlow));
 	}
 }

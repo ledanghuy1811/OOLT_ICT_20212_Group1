@@ -47,6 +47,7 @@ public class BellmanFord extends Algorithm {
                 for(Edge e : this.getGraph().getEdge()[j]) {
                 	int u = e.getNodeSource().getId();
                     int v = e.getNodeTarget().getId();
+                    System.out.printf("%d - %d\n", u ,v);
                     double weight = e.getWeight();
                     this.getStep().addStep(u, v, weight, "Check node " + u + " and " + v + " with weight: " + weight,  this.stepLabel, this.canvasGroup, this.circles, st, false, this.textFlow);
                     if (

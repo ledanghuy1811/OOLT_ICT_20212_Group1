@@ -79,7 +79,6 @@ public class Dijkstra extends Algorithm {
 
 		Vertex src = this.getSource();
 		ArrayList<Edge> adj[]= this.getGraph().getEdge();
-
 		for (int i = 0; i < this.getNumVertex(); i++)
 			this.setOneDist(i, Double.MAX_VALUE);
 

@@ -128,6 +128,14 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
+                  <JFXButton fx:id="initButton" buttonType="RAISED" layoutX="23.0" layoutY="518.0" onAction="#InitializeData" prefHeight="46.0" prefWidth="254.0" style="-fx-background-color: FF9F29; -fx-text-fill: black;" text="INITIALIZE SAMPLE" textFill="#c4dfaa">
+                     <font>
+                        <Font name="Junction Regular Regular" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
                </children>
             </AnchorPane>
             <Label layoutX="317.0" layoutY="558.0" text="Step: ">

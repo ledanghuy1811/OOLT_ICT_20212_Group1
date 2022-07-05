@@ -17,8 +17,10 @@ public class NodeFX extends Circle {
     public NodeFX(double x, double y, double rad, String name, Graph myGraph, Group canvasGroup) {
         super(x, y, rad);
         point = new Point((int) x, (int) y);
+        System.out.printf("x: %f - y: %f\n", x, y   );
         id = new Label(name);
         myGraph.addVertex(Integer.parseInt(id.getText()));
+        System.out.println(id.getText());
         System.out.printf("Add vertex %s to graph\n", id.getText());
         canvasGroup.getChildren().add(id);
         id.setLayoutX(x - 3);

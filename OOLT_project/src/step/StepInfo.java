@@ -40,7 +40,6 @@ public class StepInfo {
 		FadeTransition fd = new FadeTransition(Duration.millis(10), stepLabel);
 		fd.setOnFinished(e -> {
 			stepLabel.setText(this.getDetail());
-
 		});
 		fd.onFinishedProperty();
 		st.getChildren().add(fd);
@@ -58,7 +57,6 @@ public class StepInfo {
 				circles.get(nodeTarget).distance.setText("Dist. : " + weight);
 			}
 			ft1.setToValue(Color.BLACK);
-			System.out.println(this.getDetail());
 
 		});
 		ft1.onFinishedProperty();

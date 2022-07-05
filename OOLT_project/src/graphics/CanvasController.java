@@ -36,6 +36,8 @@ import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -53,7 +55,7 @@ public class CanvasController implements Initializable {
     @FXML
     protected StackPane stackRoot;
     @FXML
-    protected JFXButton canvasBackButton, clearButton, resetButton, playPauseButton;
+    protected JFXButton canvasBackButton, clearButton, resetButton, initButton;
     @FXML
     protected JFXToggleButton addNodeButton, addEdgeButton, bfsButton, dijkstraButton,
             belFordButton;
@@ -91,6 +93,7 @@ public class CanvasController implements Initializable {
     protected Arrow arrow;
     public static TextArea textFlow = new TextArea();
     public ScrollPane textContainer = new ScrollPane();
+    private Context context;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -105,11 +108,14 @@ public class CanvasController implements Initializable {
             bfsButton.setDisable(true);
         }
         if (!weighted) {
-            belFordButton.setDisable(true);
             dijkstraButton.setDisable(true);
+            belFordButton.setDisable(true);
         }
         // intialize graph
         System.out.println("Directed: " + directed + "Weight: " + weighted);
+        if (!directed){
+            belFordButton.setDisable(true);
+        }
         myGraph = InputGraph.setGraph(directed, weighted);
         canvasBackButton.setOnAction(e -> {
             try {
@@ -246,6 +252,7 @@ public class CanvasController implements Initializable {
         clearButton.setDisable(true);
         hiddenPane.setPinnedSide(null);
         bfsButton.setDisable(true);
+        initButton.setDisable(false);
         dijkstraButton.setDisable(true);
         belFordButton.setDisable(true);
         myGraph = InputGraph.setGraph(directed, weighted);
@@ -262,6 +269,31 @@ public class CanvasController implements Initializable {
         textFlow.setText("");
     }
 
+    @FXML
+    public void InitializeData(ActionEvent event){
+        if (bfs){
+            ResetHandle(null);
+            myGraph = InputGraph.setGraph(directed, weighted);
+            context = new Context(myGraph,canvasGroup,circles,edgeLine, arrow, 1,directed, mouseHandler);
+            nNode += 8;
+        }
+        else if (dijkstra){
+            ResetHandle(null);
+            myGraph = InputGraph.setGraph(directed, weighted);
+            context = new Context(myGraph,canvasGroup,circles,edgeLine, arrow, 2,directed, mouseHandler);
+            nNode += 4;
+        }
+        else {
+            ResetHandle(null);
+            myGraph = InputGraph.setGraph(directed, weighted);
+            context = new Context(myGraph,canvasGroup,circles,edgeLine, arrow, 3,directed, mouseHandler);
+            nNode += 5;
+        }
+
+        initButton.setDisable(true);
+        addEdgeButton.setDisable(false);
+        addNodeButton.setDisable(false);
+    }
     @FXML
     public void ClearHandle(ActionEvent event) {
         menuBool = false;
@@ -281,6 +313,7 @@ public class CanvasController implements Initializable {
         distances = new ArrayList<>();
         addNodeButton.setDisable(false);
         addEdgeButton.setDisable(false);
+        initButton.setDisable(true);
         if (!weighted) {
             bfsButton.setDisable(false);
             bfsButton.setSelected(false);
@@ -352,6 +385,7 @@ public class CanvasController implements Initializable {
         bfs = true;
         bf = false;
         dijkstra = false;
+
     }
 
     @FXML
@@ -456,6 +490,7 @@ public class CanvasController implements Initializable {
                     if (calculate && !calculated) {
                         // Add Infomation of dist
                         for (NodeFX n : circles) {
+                            System.out.println("Run" + n.id.getText());
                             distances.add(n.distance);
                             n.distance.setLayoutX(n.point.x + 20);
                             n.distance.setLayoutY(n.point.y);
@@ -465,8 +500,9 @@ public class CanvasController implements Initializable {
                         }
                         circle.distance.setText("Dist. : 0");
                         Algorithm algo;
-                        Context context = new Context();
+                        context = new Context();
                         if (bfs) {
+                            // SEED DATA
                             algo = inputAlgorithms(myGraph, new InputBFS(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
                             context.setUpAlgorithm((BFS) algo);
                             context.play((BFS) algo);
@@ -480,7 +516,6 @@ public class CanvasController implements Initializable {
                             context.play((BellmanFord) algo);
                         }
                         // belmond ford in here
-
                         calculated = true;
                     }
                 } else {
