@@ -4,6 +4,7 @@ import java.util.List;
 
 import graph.*;
 import graphics.NodeFX;
+import javafx.animation.SequentialTransition;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import step.*;
@@ -68,6 +69,6 @@ public abstract class Algorithm {
 	
     
 	//to override
-	public abstract void execute();
+	public abstract void execute(SequentialTransition st);
 	public abstract void play();
 }

@@ -7,6 +7,7 @@ import graphics.Arrow;
 import graphics.NodeFX;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -105,8 +106,8 @@ public class Context {
 	}
 	
 	// method
-	public void setUpAlgorithm(Algorithm algo) {
-		algo.execute();
+	public void setUpAlgorithm(Algorithm algo, SequentialTransition st) {
+		algo.execute(st);
 	}
 	public void play(Algorithm algo) {
 		algo.play();

@@ -95,6 +95,7 @@ public class CanvasController implements Initializable {
     public ScrollPane textContainer = new ScrollPane();
     private Context context;
     public static int timeAnimation = 500;
+    protected SequentialTransition st = new SequentialTransition();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -282,8 +283,11 @@ public class CanvasController implements Initializable {
         if (weighted) {
             dijkstraButton.setDisable(false);
             dijkstraButton.setSelected(false);
-            belFordButton.setDisable(false);
-            belFordButton.setSelected(false);
+            if (directed){
+                belFordButton.setDisable(false);
+                belFordButton.setSelected(false);
+            }
+
         }
         textFlow.setText("");
     }
@@ -315,10 +319,17 @@ public class CanvasController implements Initializable {
     }
     @FXML
     public void ClearHandle(ActionEvent event) {
+        if(st != null && st.getStatus() != Animation.Status.STOPPED)
+        {
+            System.out.println("Run clear");
+            st.stop();
+        }
+        if(st != null){
+            st.getChildren().clear();
+        }
         menuBool = false;
         selectedNode = null;
         calculated = false;
-        System.out.println("IN CLEAR:" + circles.size());
         for (NodeFX n : circles) {
             n.isSelected = false;
             FillTransition ft1 = new FillTransition(Duration.millis(300), n);
@@ -340,8 +351,10 @@ public class CanvasController implements Initializable {
         if (weighted) {
             dijkstraButton.setDisable(false);
             dijkstraButton.setSelected(false);
-            belFordButton.setDisable(false);
-            belFordButton.setSelected(false);
+            if (directed){
+                belFordButton.setDisable(false);
+                belFordButton.setSelected(false);
+            }
         }
         bfs = false;
         dijkstra = false;
@@ -523,15 +536,15 @@ public class CanvasController implements Initializable {
                         if (bfs) {
                             // SEED DATA
                             algo = inputAlgorithms(myGraph, new InputBFS(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
-                            context.setUpAlgorithm((BFS) algo);
+                            context.setUpAlgorithm((BFS) algo, st);
                             context.play((BFS) algo);
                         } else if (dijkstra) {
                             algo = inputAlgorithms(myGraph, new InputDijkstra(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
-                            context.setUpAlgorithm((Dijkstra) algo);
+                            context.setUpAlgorithm((Dijkstra) algo, st);
                             context.play((Dijkstra) algo);
                         } else if (bf) {
                             algo = inputAlgorithms(myGraph, new InputBellmanFord(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
-                            context.setUpAlgorithm((BellmanFord) algo);
+                            context.setUpAlgorithm((BellmanFord) algo, st);
                             context.play((BellmanFord) algo);
                         }
                         // belmond ford in here

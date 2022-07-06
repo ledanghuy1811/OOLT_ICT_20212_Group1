@@ -50,9 +50,9 @@ public class BFS extends Algorithm {
 	
 	//override method
 	@Override
-	public void execute() {
+	public void execute(SequentialTransition st) {
 		nIndex = 0;
-		SequentialTransition st = new SequentialTransition();
+		//st = new SequentialTransition();
 		Vertex s = this.getSource();
 		// Mark all the vertices as not visited(By default
 		// set as false)

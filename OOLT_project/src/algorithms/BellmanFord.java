@@ -29,8 +29,8 @@ public class BellmanFord extends Algorithm {
 
     // override
 	@Override
-	public void execute() {
-        SequentialTransition st = new SequentialTransition();
+	public void execute(SequentialTransition st) {
+        //st = new SequentialTransition();
         Vertex s = this.getSource();
 		//Initialize distances from src to all other
         // vertices as INFINITE

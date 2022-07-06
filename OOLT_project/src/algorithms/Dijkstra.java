@@ -74,8 +74,8 @@ public class Dijkstra extends Algorithm {
     
 	//override
 	@Override
-	public void execute() {
-		SequentialTransition st = new SequentialTransition();
+	public void execute(SequentialTransition st) {
+		//st = new SequentialTransition();
 
 		Vertex src = this.getSource();
 		ArrayList<Edge> adj[]= this.getGraph().getEdge();
