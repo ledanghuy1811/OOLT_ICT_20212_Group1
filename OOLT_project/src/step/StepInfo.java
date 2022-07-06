@@ -1,5 +1,6 @@
 package step;
 
+import graphics.CanvasController;
 import graphics.NodeFX;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class StepInfo {
 		this.nodeTarget = nodeTarget;
 		this.weight = weight;
 		this.detail = detail;
-		FillTransition ft = new FillTransition(Duration.millis(500), circles.get(nodeSource));
+		FillTransition ft = new FillTransition(Duration.millis(CanvasController.timeAnimation), circles.get(nodeSource));
 		if (circles.get(nodeSource).getFill() == Color.BLACK) {
 			ft.setToValue(Color.CHOCOLATE);
 		}
@@ -45,7 +46,7 @@ public class StepInfo {
 		st.getChildren().add(fd);
 
 		st.getChildren().add(ft);
-		FillTransition ft1 = new FillTransition(Duration.millis(500), circles.get(nodeTarget));
+		FillTransition ft1 = new FillTransition(Duration.millis(CanvasController.timeAnimation), circles.get(nodeTarget));
 		if (circles.get(nodeTarget).getFill() == Color.FORESTGREEN){
 			ft1.setToValue(Color.PURPLE);
 		}
@@ -69,11 +70,11 @@ public class StepInfo {
 		st.getChildren().add(fd2);
 		st.setOnFinished(ev -> {
 			for (NodeFX n : circles) {
-				FillTransition ft2 = new FillTransition(Duration.millis(500), n);
+				FillTransition ft2 = new FillTransition(Duration.millis(CanvasController.timeAnimation), n);
 				ft2.setToValue(Color.BLACK);
 				ft2.play();
 			}
-			FillTransition ft3 = new FillTransition(Duration.millis(500), circles.get(nodeSource));
+			FillTransition ft3 = new FillTransition(Duration.millis(CanvasController.timeAnimation), circles.get(nodeSource));
 			ft3.setToValue(Color.RED);
 			ft3.play();
 		});

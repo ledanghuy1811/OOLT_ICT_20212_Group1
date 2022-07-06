@@ -55,7 +55,7 @@ public class CanvasController implements Initializable {
     @FXML
     protected StackPane stackRoot;
     @FXML
-    protected JFXButton canvasBackButton, clearButton, resetButton, initButton;
+    protected JFXButton canvasBackButton, clearButton, resetButton, initButton, canvasChangeTime;
     @FXML
     protected JFXToggleButton addNodeButton, addEdgeButton, bfsButton, dijkstraButton,
             belFordButton;
@@ -91,9 +91,10 @@ public class CanvasController implements Initializable {
     protected NodeFX selectedNode = null;
     protected List<NodeFX> circles = new ArrayList<>();
     protected Arrow arrow;
-    public static TextArea textFlow = new TextArea();
+    public TextArea textFlow = new TextArea();
     public ScrollPane textContainer = new ScrollPane();
     private Context context;
+    public static int timeAnimation = 500;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -192,7 +193,25 @@ public class CanvasController implements Initializable {
         hiddenPane.setTriggerDistance(60);
 
     }
+    @FXML
+    public void changeTimeAnimation(ActionEvent ev){
+        TextInputDialog timeChange = new TextInputDialog("500");
+        timeChange.setTitle(null);
+        timeChange.setHeaderText("Enter time animation (miliseconds):");
+        timeChange.setContentText(null);
 
+        Optional<String> result = timeChange.showAndWait();
+
+        try {
+            if (result.isPresent()) {
+                timeAnimation = Integer.parseInt(result.get());
+            } else {
+                timeAnimation = 500;
+            }
+        }catch(Exception e){
+            timeAnimation = 500;
+        }
+    }
     @FXML
     public void handle(MouseEvent ev) {
         if (addNode) {

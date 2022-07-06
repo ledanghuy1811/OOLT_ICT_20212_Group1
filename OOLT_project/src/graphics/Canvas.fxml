@@ -136,6 +136,16 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
+                  <JFXButton fx:id="canvasChangeTime" contentDisplay="GRAPHIC_ONLY" layoutX="255.0" onAction="#changeTimeAnimation" prefHeight="30.0" prefWidth="34.0">
+                     <graphic>
+                        <ImageView fx:id="canvasTime" fitHeight="29.0" fitWidth="28.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@res/fast_forward_black_48x48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="canvasBackButton2" contentDisplay="GRAPHIC_ONLY" layoutX="119.0" layoutY="36.0" prefHeight="30.0" prefWidth="34.0" />
                </children>
             </AnchorPane>
             <Label layoutX="317.0" layoutY="558.0" text="Step: ">
