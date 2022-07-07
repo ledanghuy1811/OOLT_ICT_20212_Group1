@@ -8,6 +8,7 @@
 		<item key="isRegEx" value="false"/>
 		<item key="selection" value="nIndex"/>
 		<list key="findhistory">
+			<item value="i"/>
 			<item value="target"/>
 			<item value="nIndex"/>
 			<item value="settled"/>
@@ -16,6 +17,7 @@
 			<item value="PriorityQueue"/>
 		</list>
 		<list key="replacehistory">
+			<item value="j"/>
 			<item value=""/>
 		</list>
 	</section>

@@ -1,0 +1,18 @@
+package step;
+
+import java.util.ArrayList;
+
+public class StepPseudo {
+	private ArrayList<String> pseudo = new ArrayList<String>(); 
+	
+	public StepPseudo() {
+		
+	}
+	public StepPseudo(ArrayList<String> pseudo) {
+		this.pseudo = pseudo;
+	}
+	
+	public void printPseudo(int index) {
+		System.out.println(this.);
+	}
+}

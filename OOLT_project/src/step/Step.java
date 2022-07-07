@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Step {
 	// attribute
 	private ArrayList<StepInfo> stepDetail = new ArrayList<StepInfo>();
+	private StepPseudo pseudoStep = new StepPseudo();
 	
 	//constructor
 	public Step() {
@@ -14,6 +15,9 @@ public class Step {
 	//getter
 	public ArrayList<StepInfo> getStepDetail() {
 		return stepDetail;
+	}
+	public StepPseudo getPseudoStep() {
+		return this.pseudoStep;
 	}
 	
 	// method

@@ -29,6 +29,8 @@ public class Dijkstra extends Algorithm {
 		// All the neighbors of v
 		for (int i = 0; i < adj[u].size(); i++) {
 			Edge v = adj[u].get(i);
+			this.getStep().getPseudoStep().setIndex(2);
+			this.getStep().getPseudoStep().setIndex(3);
 
 			// If current node hasn't already been processed
 			if (!settled.contains(v.getNodeTarget())) {
@@ -59,6 +61,13 @@ public class Dijkstra extends Algorithm {
 	//override
 	@Override
 	public void execute() {
+		ArrayList<String> pseudoContent = new ArrayList<String>();
+		pseudoContent.add("initSSSP, pre-populate PQ");
+		pseudoContent.add("while !PQ.empty() // PQ is a Priority Queue");
+		pseudoContent.add("for each neighbor v of u = PQ.front(), PQ.pop()");
+		pseudoContent.add("relax(u, v, w(u, v)) + update PQ");
+		this.getStep().getPseudoStep().setPseudo(pseudoContent);
+		
 		Vertex src = this.getSource();
 		ArrayList<Edge> adj[]= this.getGraph().getEdge();
 
@@ -70,6 +79,7 @@ public class Dijkstra extends Algorithm {
 
 		// Distance to the source is 0
 		this.setOneDist(this.getSource().getId(), 0);
+		this.getStep().getPseudoStep().setIndex(0);
 
 		while (settled.size() != this.getNumVertex()) {
 
@@ -81,6 +91,7 @@ public class Dijkstra extends Algorithm {
 			// Removing the minimum distance node
 			// from the priority queue
 			int u = pq.remove().getNodeTarget().getId();
+			this.getStep().getPseudoStep().setIndex(1);
 			this.getStep().addStep(u, u, this.getDist()[u], "Verify node " + u);
 
 			// Adding the node whose distance is

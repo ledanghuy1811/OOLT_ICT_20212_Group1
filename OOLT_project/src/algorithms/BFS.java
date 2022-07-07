@@ -1,5 +1,6 @@
 package algorithms;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import graph.*;
@@ -33,6 +34,14 @@ public class BFS extends Algorithm {
 	//override method
 	@Override
 	public void execute() {
+		ArrayList<String> pseudoContent = new ArrayList<String>();
+		pseudoContent.add("BFS(u), Q = {u}");
+		pseudoContent.add("while !Q.empty // Q is a normal queue");
+		pseudoContent.add("for each neighbor v of u = Q.front, Q.pop");
+		pseudoContent.add("if v is unvisited, tree edge, Q.push(v)");
+		pseudoContent.add("else if v is visited, we ignore this edge");
+		this.getStep().getPseudoStep().setPseudo(pseudoContent);
+		
 		nIndex = 0;
 		Vertex s = this.getSource();
 		// Mark all the vertices as not visited(By default
@@ -45,36 +54,34 @@ public class BFS extends Algorithm {
 		// Mark the current node as visited and enqueue it
 		visited[this.getSource().getId()] = true;
 		queue.add(s);
+		this.getStep().getPseudoStep().setIndex(0);
 		
 		while(queue.size() != 0) {
 			// Dequeue a vertex from queue and print it
 			s = queue.poll();
-//			System.out.print(s.getId() + " ");
 			this.setOneDist(nIndex, s.getId());
 			nIndex ++;
 			this.getStep().addStep(s.getId(), s.getId(), 0, "Verify node " + s.getId());
+			this.getStep().getPseudoStep().setIndex(1);
 			
 			// Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
             // visited and enqueue it
 			Iterator<Vertex> i = this.adj[s.getId()].listIterator();
 			while (i.hasNext()) {
+				this.getStep().getPseudoStep().setIndex(2);
                 Vertex n = i.next();
                 if (!visited[n.getId()])
                 {
                     visited[n.getId()] = true;
                     queue.add(n);
                     this.getStep().addStep(s.getId(), n.getId(), 1, "Check node " + n.getId());
+                    this.getStep().getPseudoStep().setIndex(3);
+                }
+                else {
+                	this.getStep().getPseudoStep().setIndex(4);
                 }
             }
-//			if(queue.size() == 0) {
-//				nIndex -= 1;
-//				for(int j = 0; j < this.getNumVertex(); j++) 
-//					if(visited[j] == false) {
-//						queue.add(new Vertex(j));
-//					}
-//				System.out.println("hi");
-//			}
 		}
 	}
 	@Override

@@ -26,10 +26,10 @@
     <fullyQualifiedTypeName name="context.SetBellmanFord"/>
     <fullyQualifiedTypeName name="algorithms.Algorithms"/>
     <fullyQualifiedTypeName name="graph.Graph"/>
-    <fullyQualifiedTypeName name="graph.Vertex"/>
     <fullyQualifiedTypeName name="context.Context"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="step.Step"/>
     <fullyQualifiedTypeName name="step.StepInfo"/>
+    <fullyQualifiedTypeName name="graph.Vertex"/>
 </qualifiedTypeNameHistroy>
