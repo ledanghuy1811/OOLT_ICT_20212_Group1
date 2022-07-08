@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
+import utils.Utils;
 
 import javax.swing.*;
 import java.util.Scanner;
@@ -26,7 +27,6 @@ public class Context {
 	}
 
 	public Context(Graph myGraph, Group canvasGroup, List<NodeFX> circles,  Line edgeLine, Arrow arrow, int type, boolean directed, EventHandler<MouseEvent> mouseHandler) {
-		String publicURI = "D:/Newfolder/.vscode/.vscode/Java/JavaFX/OOLT_project/OOLT_project/src/test/";
 		String nameFile = "bfs.txt";
 		if (type == 1){
 			nameFile = "bfs.txt";
@@ -38,8 +38,7 @@ public class Context {
 			nameFile = "bf.txt";
 		}
 		try {
-			System.out.println(publicURI + nameFile + "type-" + type);
-			File myObj = new File(publicURI + nameFile);
+			File myObj = new File(Utils.uri + nameFile);
 			Scanner myReader = new Scanner(myObj);
 			String vertexName;
 			double vertexX;

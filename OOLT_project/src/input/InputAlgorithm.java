@@ -10,5 +10,5 @@ import javafx.scene.control.TextArea;
 import java.util.List;
 
 public interface InputAlgorithm {
-	public Algorithm inputAlgorithm(Graph aGraph, int sourceId, Label distances, Group canvasGroup, List<NodeFX> circles, TextArea textFlow);
+	public Algorithm inputAlgorithm(Graph aGraph, int sourceId, Label distances, Group canvasGroup, List<NodeFX> circles, Group textFlow, List<Label> textFlowLabels);
 }

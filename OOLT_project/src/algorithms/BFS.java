@@ -1,5 +1,6 @@
 package algorithms;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,8 +32,8 @@ public class BFS extends Algorithm {
 		}
 	}
 
-	public BFS(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
-		super(graph, numVertex, source, stepLabel, canvasGroup, circles, textFlow);
+	public BFS(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, Group textFlow, List<Label> textFlowLabels) {
+		super(graph, numVertex, source, stepLabel, canvasGroup, circles, textFlow, textFlowLabels);
 		this.adj = new LinkedList[numVertex];
 		for(int i = 0; i < numVertex; i++) {
 			adj[i] = new LinkedList();
@@ -51,6 +52,13 @@ public class BFS extends Algorithm {
 	//override method
 	@Override
 	public void execute(SequentialTransition st) {
+		ArrayList<String> pseudoContent = new ArrayList<String>();
+		pseudoContent.add("BFS(u), Q = {u}");
+		pseudoContent.add("while !Q.empty // Q is a normal queue");
+		pseudoContent.add("for each neighbor v of u = Q.front, Q.pop");
+		pseudoContent.add("if v is unvisited, tree edge, Q.push(v)");
+		pseudoContent.add("else if v is visited, we ignore this edge");
+		this.getStep().getPseudoStep().setPseudo(pseudoContent, this.textFlow, this.textFlowLabels);
 		nIndex = 0;
 		//st = new SequentialTransition();
 		Vertex s = this.getSource();
@@ -64,6 +72,7 @@ public class BFS extends Algorithm {
 		// Mark the current node as visited and enqueue it
 		visited[this.getSource().getId()] = true;
 		queue.add(s);
+		this.getStep().getPseudoStep().setIndex(0, this.textFlowLabels, st);
 
 		while(queue.size() != 0) {
 			// Dequeue a vertex from queue and print it
@@ -73,7 +82,7 @@ public class BFS extends Algorithm {
 			this.setOneDist(nIndex, s.getId());
 			nIndex ++;
 			this.getStep().addStep(s.getId(), s.getId(), 0, "Verify node " + s.getId(), this.stepLabel, this.canvasGroup, this.circles, st,false, this.textFlow);
-
+			this.getStep().getPseudoStep().setIndex(1, this.textFlowLabels, st);
 			// Get all adjacent vertices of the dequeued vertex s
 			// If a adjacent has not been visited, then mark it
 
@@ -81,12 +90,17 @@ public class BFS extends Algorithm {
 			Iterator<Vertex> i = this.adj[s.getId()].listIterator();
 			while (i.hasNext())
 			{
+				this.getStep().getPseudoStep().setIndex(2, this.textFlowLabels, st);
 				Vertex n = i.next();
 				if (!visited[n.getId()])
 				{
 					visited[n.getId()] = true;
 					queue.add(n);
 					this.getStep().addStep(s.getId(), n.getId(), 1, "Check node " + n.getId(), this.stepLabel, this.canvasGroup, this.circles, st,true, this.textFlow);
+					this.getStep().getPseudoStep().setIndex(3, this.textFlowLabels, st);
+				}
+				else {
+					this.getStep().getPseudoStep().setIndex(4, this.textFlowLabels, st);
 				}
 			}
 		}

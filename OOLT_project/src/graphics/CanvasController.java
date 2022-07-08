@@ -36,6 +36,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,10 +92,12 @@ public class CanvasController implements Initializable {
     protected NodeFX selectedNode = null;
     protected List<NodeFX> circles = new ArrayList<>();
     protected Arrow arrow;
-    public TextArea textFlow = new TextArea();
+
+    public Group textFlow = new Group();
+    public ArrayList<Label> textFlowLabels = new ArrayList<Label>();
+
     public ScrollPane textContainer = new ScrollPane();
     private Context context;
-    public static int timeAnimation = 500;
     protected SequentialTransition st = new SequentialTransition();
 
     @Override
@@ -129,27 +132,27 @@ public class CanvasController implements Initializable {
             }
         });
 
-        hiddenRoot.setPrefWidth(220);
+        hiddenRoot.setPrefWidth(Utils.slidePanelSizeX);
         hiddenRoot.setPrefHeight(581);
         hiddenRoot.setCursor(Cursor.DEFAULT);
 
         //Set Label "Detail"
-        Label detailLabel = new Label("Detail");
+        Label detailLabel = new Label("Pseudo");
         detailLabel.setPrefSize(hiddenRoot.getPrefWidth() - 20, 38);
         detailLabel.setAlignment(Pos.CENTER);
         detailLabel.setFont(new Font("Roboto", 20));
         detailLabel.setPadding(new Insets(7, 40, 3, -10));
-        detailLabel.setStyle("-fx-background-color:  #2A2B36;");
-        detailLabel.setStyle("-fx-color:  white;");
+        detailLabel.setStyle("-fx-background-color:  #FF9F29 !important;");
+        detailLabel.setStyle("-fx-color:  white !important;");
         detailLabel.setLayoutX(35);
         //Set TextFlow pane properties
-        textFlow.setPrefSize(hiddenRoot.getPrefWidth(), hiddenRoot.getPrefHeight() - 2);
-//        textFlow.prefHeightProperty().bind(hiddenRoot.heightProperty());
-        textFlow.setStyle("-fx-background-color: #dfe6e9;");
         textFlow.setLayoutY(39);
+        Pane textFlowPane = new Pane();
+        textFlowPane.setPrefHeight(603);
+        textFlowPane.setPrefWidth(Utils.slidePanelSizeX);
+        textFlow.getChildren().add(textFlowPane);
         textContainer.setLayoutY(textFlow.getLayoutY());
-        textFlow.setPadding(new Insets(5, 0, 0, 5));
-        textFlow.setEditable(false);
+        //textFlow.setPadding(new Insets(5, 0, 0, 5));
         textContainer.setContent(textFlow);
 
         //Set Pin/Unpin Button
@@ -205,12 +208,12 @@ public class CanvasController implements Initializable {
 
         try {
             if (result.isPresent()) {
-                timeAnimation = Integer.parseInt(result.get());
+                Utils.timeAnimation = Integer.parseInt(result.get());
             } else {
-                timeAnimation = 500;
+                Utils.timeAnimation = 500;
             }
         }catch(Exception e){
-            timeAnimation = 500;
+            Utils.timeAnimation = 500;
         }
     }
     @FXML
@@ -258,6 +261,7 @@ public class CanvasController implements Initializable {
         nNode = 0;
         canvasGroup.getChildren().clear();
         canvasGroup.getChildren().addAll(viewer);
+
         selectedNode = null;
         circles = new ArrayList<NodeFX>();
         distances = new ArrayList<Label>();
@@ -270,7 +274,6 @@ public class CanvasController implements Initializable {
         addEdgeButton.setDisable(true);
         addNodeButton.setDisable(false);
         clearButton.setDisable(true);
-        hiddenPane.setPinnedSide(null);
         bfsButton.setDisable(true);
         initButton.setDisable(false);
         dijkstraButton.setDisable(true);
@@ -289,7 +292,12 @@ public class CanvasController implements Initializable {
             }
 
         }
-        textFlow.setText("");
+        if (textFlowLabels != null){
+            for (Label textFlowLabel: textFlowLabels){
+                textFlow.getChildren().remove(textFlowLabel);
+            }
+            textFlowLabels = new ArrayList<Label>();
+        }
     }
 
     @FXML
@@ -359,7 +367,13 @@ public class CanvasController implements Initializable {
         bfs = false;
         dijkstra = false;
         bf = false;
-        textFlow.setText("");
+        if (textFlowLabels != null){
+            for (Label textFlowLabel: textFlowLabels){
+                textFlow.getChildren().remove(textFlowLabel);
+            }
+            textFlowLabels = new ArrayList<Label>();
+        }
+
 
     }
 
@@ -450,8 +464,8 @@ public class CanvasController implements Initializable {
         dijkstra = true;
     }
 
-    public Algorithm inputAlgorithms(Graph myGraph, InputAlgorithm algo, int sourceId, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
-		return algo.inputAlgorithm(myGraph, sourceId, stepLabel, canvasGroup, circles, textFlow);
+    public Algorithm inputAlgorithms(Graph myGraph, InputAlgorithm algo, int sourceId, Label stepLabel, Group canvasGroup, List<NodeFX> circles, Group textFlow, List<Label> textFlowLabels) {
+		return algo.inputAlgorithm(myGraph, sourceId, stepLabel, canvasGroup, circles, textFlow, textFlowLabels);
 	}
     protected EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 
@@ -535,15 +549,15 @@ public class CanvasController implements Initializable {
                         context = new Context();
                         if (bfs) {
                             // SEED DATA
-                            algo = inputAlgorithms(myGraph, new InputBFS(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
+                            algo = inputAlgorithms(myGraph, new InputBFS(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow, textFlowLabels);
                             context.setUpAlgorithm((BFS) algo, st);
                             context.play((BFS) algo);
                         } else if (dijkstra) {
-                            algo = inputAlgorithms(myGraph, new InputDijkstra(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
+                            algo = inputAlgorithms(myGraph, new InputDijkstra(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow, textFlowLabels);
                             context.setUpAlgorithm((Dijkstra) algo, st);
                             context.play((Dijkstra) algo);
                         } else if (bf) {
-                            algo = inputAlgorithms(myGraph, new InputBellmanFord(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow);
+                            algo = inputAlgorithms(myGraph, new InputBellmanFord(), Integer.parseInt(circle.id.getText()), stepLabel, canvasGroup, circles, textFlow, textFlowLabels);
                             context.setUpAlgorithm((BellmanFord) algo, st);
                             context.play((BellmanFord) algo);
                         }

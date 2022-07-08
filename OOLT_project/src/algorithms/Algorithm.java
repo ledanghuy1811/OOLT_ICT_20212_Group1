@@ -15,8 +15,8 @@ public abstract class Algorithm {
 	Label stepLabel;
 	Group canvasGroup;
 	List<NodeFX> circles;
-
-	TextArea textFlow;
+	List<Label> textFlowLabels;
+	Group textFlow;
 	//attributes
 
 	private Graph graph;
@@ -36,7 +36,7 @@ public abstract class Algorithm {
 		this.dist = new double[numVertex];
 	}
 
-	public Algorithm(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+	public Algorithm(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, Group textFlow, List<Label> textFlowLabels) {
 		this.graph = graph;
 		this.numVertex = numVertex;
 		this.source = source;
@@ -45,6 +45,7 @@ public abstract class Algorithm {
 		this.textFlow = textFlow;
 		this.circles = circles;
 		this.dist = new double[numVertex];
+		this.textFlowLabels = textFlowLabels;
 	}
 	
 	//getter and setter

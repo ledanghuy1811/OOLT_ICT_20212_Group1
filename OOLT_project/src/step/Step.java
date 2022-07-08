@@ -12,23 +12,21 @@ import java.util.List;
 public class Step {
 	// attribute
 	private ArrayList<StepInfo> stepDetail = new ArrayList<StepInfo>();
-	
+	private StepPseudo pseudoStep = new StepPseudo();
 	//constructor
 	public Step() {
 		
 	}
-	
+
 	//getter
 	public ArrayList<StepInfo> getStepDetail() {
 		return stepDetail;
 	}
-	
-	// method
-	public void addStep(int nodeSource, int nodeTarget, double weight, String detail) {
-		this.stepDetail.add(new StepInfo(nodeSource, nodeTarget, weight, detail));
+	public StepPseudo getPseudoStep() {
+		return this.pseudoStep;
 	}
 
-	public void addStep(int nodeSource, int nodeTarget, double weight, String detail, Label stepLabel, Group canvasGroup, List<NodeFX> circles, SequentialTransition st, boolean isSwap, TextArea textFlow) {
+	public void addStep(int nodeSource, int nodeTarget, double weight, String detail, Label stepLabel, Group canvasGroup, List<NodeFX> circles, SequentialTransition st, boolean isSwap, Group textFlow) {
 		this.stepDetail.add(new StepInfo(nodeSource, nodeTarget, weight, detail, stepLabel, canvasGroup, circles, st, isSwap, textFlow));
 	}
 }

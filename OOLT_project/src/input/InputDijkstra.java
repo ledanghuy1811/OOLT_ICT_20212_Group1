@@ -11,11 +11,11 @@ import javafx.scene.control.TextArea;
 
 public class InputDijkstra implements InputAlgorithm {
 	@Override
-	public Algorithm inputAlgorithm(Graph aGraph, int sourceId, Label distances, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+	public Algorithm inputAlgorithm(Graph aGraph, int sourceId, Label distances, Group canvasGroup, List<NodeFX> circles, Group textFlow, List<Label> textFlowLabels) {
 		Scanner keyBoard = new Scanner(System.in);
 
 		int numVertex = aGraph.getVertex().size();
 
-		return new Dijkstra(aGraph, numVertex, new Vertex(sourceId), distances, canvasGroup, circles, textFlow);
+		return new Dijkstra(aGraph, numVertex, new Vertex(sourceId), distances, canvasGroup, circles, textFlow, textFlowLabels);
 	}
 }

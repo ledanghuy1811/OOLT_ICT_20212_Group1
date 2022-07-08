@@ -25,11 +25,12 @@ public class Dijkstra extends Algorithm {
     	this.pq = new PriorityQueue<Edge>(numVertex, new Edge());
     }
 
-	public Dijkstra(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, TextArea textFlow) {
+	public Dijkstra(Graph graph, int numVertex, Vertex source, Label stepLabel, Group canvasGroup, List<NodeFX> circles, Group textFlow, List<Label> textFlowLabels) {
 		super(graph, numVertex, source);
 		this.stepLabel = stepLabel;
 		this.textFlow = textFlow;
 		this.canvasGroup = canvasGroup;
+		this.textFlowLabels = textFlowLabels;
 		this.circles = circles;
 		this.settled = new HashSet<Vertex>();
 		this.pq = new PriorityQueue<Edge>(numVertex, new Edge());
@@ -44,7 +45,8 @@ public class Dijkstra extends Algorithm {
 		// All the neighbors of v
 		for (int i = 0; i < adj[u].size(); i++) {
 			Edge v = adj[u].get(i);
-
+			this.getStep().getPseudoStep().setIndex(2,  this.textFlowLabels, st);
+			this.getStep().getPseudoStep().setIndex(3,  this.textFlowLabels, st);
 			// If current node hasn't already been processed
 			if (!settled.contains(v.getNodeTarget())) {
 				edgeDistance = v.getWeight();
@@ -76,7 +78,12 @@ public class Dijkstra extends Algorithm {
 	@Override
 	public void execute(SequentialTransition st) {
 		//st = new SequentialTransition();
-
+		ArrayList<String> pseudoContent = new ArrayList<String>();
+		pseudoContent.add("initSSSP, pre-populate PQ");
+		pseudoContent.add("while !PQ.empty() // PQ is a Priority Queue");
+		pseudoContent.add("for each neighbor v of u = PQ.front(), PQ.pop()");
+		pseudoContent.add("relax(u, v, w(u, v)) + update PQ");
+		this.getStep().getPseudoStep().setPseudo(pseudoContent, this.textFlow, this.textFlowLabels);
 		Vertex src = this.getSource();
 		ArrayList<Edge> adj[]= this.getGraph().getEdge();
 		for (int i = 0; i < this.getNumVertex(); i++)
@@ -87,7 +94,7 @@ public class Dijkstra extends Algorithm {
 
 		// Distance to the source is 0
 		this.setOneDist(this.getSource().getId(), 0);
-
+		this.getStep().getPseudoStep().setIndex(0,  this.textFlowLabels, st);
 		while (settled.size() != this.getNumVertex()) {
 
 			// Terminating condition check when
@@ -98,6 +105,7 @@ public class Dijkstra extends Algorithm {
 			// Removing the minimum distance node
 			// from the priority queue
 			int u = pq.remove().getNodeTarget().getId();
+			this.getStep().getPseudoStep().setIndex(1,  this.textFlowLabels, st);
 			this.getStep().addStep(u, u, this.getDist()[u], "Verify node " + u, this.stepLabel, this.canvasGroup, this.circles, st, false, this.textFlow);
 
 			// Adding the node whose distance is
