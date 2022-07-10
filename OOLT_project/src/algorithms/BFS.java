@@ -96,7 +96,7 @@ public class BFS extends Algorithm {
 				{
 					visited[n.getId()] = true;
 					queue.add(n);
-					this.getStep().addStep(s.getId(), n.getId(), 1, "Check node " + n.getId(), this.stepLabel, this.canvasGroup, this.circles, st,true, this.textFlow);
+					this.getStep().addStep(s.getId(), n.getId(), 0, "Check node " + n.getId(), this.stepLabel, this.canvasGroup, this.circles, st,true, this.textFlow);
 					this.getStep().getPseudoStep().setIndex(3, this.textFlowLabels, st);
 				}
 				else {

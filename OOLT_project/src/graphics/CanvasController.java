@@ -119,9 +119,6 @@ public class CanvasController implements Initializable {
         }
         // intialize graph
         System.out.println("Directed: " + directed + "Weight: " + weighted);
-        if (!directed){
-            belFordButton.setDisable(true);
-        }
         myGraph = InputGraph.setGraph(directed, weighted);
         canvasBackButton.setOnAction(e -> {
             try {
@@ -287,11 +284,8 @@ public class CanvasController implements Initializable {
         if (weighted) {
             dijkstraButton.setDisable(false);
             dijkstraButton.setSelected(false);
-            if (directed){
-                belFordButton.setDisable(false);
-                belFordButton.setSelected(false);
-            }
-
+            belFordButton.setDisable(false);
+            belFordButton.setSelected(false);
         }
         if (textFlowLabels != null){
             for (Label textFlowLabel: textFlowLabels){
@@ -361,10 +355,8 @@ public class CanvasController implements Initializable {
         if (weighted) {
             dijkstraButton.setDisable(false);
             dijkstraButton.setSelected(false);
-            if (directed){
-                belFordButton.setDisable(false);
-                belFordButton.setSelected(false);
-            }
+            belFordButton.setDisable(false);
+            belFordButton.setSelected(false);
         }
         bfs = false;
         dijkstra = false;
@@ -516,6 +508,9 @@ public class CanvasController implements Initializable {
                             }
                             //Adds the edge between two selected nodes
                             myGraph.addEdge(Integer.parseInt(selectedNode.id.getText()), Integer.parseInt(circle.id.getText()), Integer.parseInt(weight.getText()));
+                            if (Integer.parseInt(weight.getText()) < 0){
+                                belFordButton.setDisable(true);
+                            }
                             System.out.printf("Add edge %s to %s in graph", selectedNode.id.getText(), circle.id.getText());
 
                         }

@@ -47,6 +47,7 @@ public class Context {
 			boolean isDirected = myGraph.getIsDirected();
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
+
 				if (data.equalsIgnoreCase(new String("Vertex:"))){
 					isInputVertex = true;
 					continue;
