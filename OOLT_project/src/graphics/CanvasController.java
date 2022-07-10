@@ -9,6 +9,7 @@ import graph.Graph;
 import input.*;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
+import main.Main;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -335,6 +336,7 @@ public class CanvasController implements Initializable {
         if(st != null){
             st.getChildren().clear();
         }
+        stepLabel.setText("");
         menuBool = false;
         selectedNode = null;
         calculated = false;

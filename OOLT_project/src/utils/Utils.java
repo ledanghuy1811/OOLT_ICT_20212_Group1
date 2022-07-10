@@ -15,5 +15,5 @@ public class Utils {
      * @dev because my computer has something errors with read file so I have to include
      * the full path to the folder contains files
      */
-    public static String uri = "D:/Newfolder/.vscode/.vscode/Java/JavaFX/OOLT_project/OOLT_project/src/test/";
+    public static String uri = "D:/Newfolder/.vscode/.vscode/Java/JavaFX/OOLT_project/OOLT_project/src/utils/";
 }
