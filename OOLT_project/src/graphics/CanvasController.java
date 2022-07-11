@@ -85,8 +85,8 @@ public class CanvasController implements Initializable {
     protected boolean addNode = true, addEdge = false, calculate = false,
             calculated = false, pinned = false;;
     protected List<Label> distances = new ArrayList<Label>();
-    protected boolean weighted = Panel1Controller.weighted,
-            directed = Panel1Controller.directed,
+    protected boolean weighted = PanelController.weighted,
+            directed = PanelController.directed,
             bfs = true, dijkstra = true, bf = true;
 
     public AnchorPane hiddenRoot = new AnchorPane();
@@ -122,7 +122,7 @@ public class CanvasController implements Initializable {
         myGraph = InputGraph.setGraph(directed, weighted);
         canvasBackButton.setOnAction(e -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("Panel1FXML.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("Panel.fxml"));
                 Scene scene = new Scene(root);
                 Main.primaryStage.setScene(scene);
             } catch (IOException ex) {

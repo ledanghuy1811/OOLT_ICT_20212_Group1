@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="OOLT_Project:jar">
+    <output-path>$PROJECT_DIR$/bin/artifacts/OOLT_Project_jar</output-path>
+    <root id="archive" name="OOLT_Project.jar">
+      <element id="module-output" name="OOLT_Project" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../controlsfx-11.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-18.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-agenda-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-all-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-common-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-controls-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-font-roboto-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-fxml-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-gauge-linear-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-icalendaragenda-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-icalendarfx-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-labs-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfxtras-menu-9.0-r1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../jfoenix-9.0.10.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
